@@ -139,6 +139,16 @@
         </div>
     </header>
 
+    <!-- Category tabs -->
+    <nav id="category-bar" class="sticky top-[90px] z-30 bg-ghibli-white/90 backdrop-blur-sm py-2 px-4 shadow-sm">
+        <div class="max-w-lg mx-auto grid grid-cols-3 gap-2">
+            <button data-cat="weather" onclick="showCategory('weather')" class="cat-btn tab-active drawn-border-sm border-2 border-transparent py-2 font-bold text-sm flex flex-col items-center leading-tight"><span class="text-xl">🌤️</span>天氣</button>
+            <button data-cat="tax" onclick="showCategory('tax')" class="cat-btn bg-white text-ghibli-brown drawn-border-sm border-2 border-transparent py-2 font-bold text-sm flex flex-col items-center leading-tight"><span class="text-xl">💴</span>新稅</button>
+            <button data-cat="itinerary" onclick="showCategory('itinerary')" class="cat-btn bg-white text-ghibli-brown drawn-border-sm border-2 border-transparent py-2 font-bold text-sm flex flex-col items-center leading-tight"><span class="text-xl">🗓️</span>行程</button>
+        </div>
+    </nav>
+
+    <div id="panel-weather" data-panel>
     <!-- Whole-trip weather overview -->
     <section id="overview-section" class="max-w-lg mx-auto px-4 pt-4">
         <div id="trip-overview" class="bg-ghibli-white drawn-border p-4 text-sm text-gray-500 text-center">
@@ -153,6 +163,9 @@
         </div>
     </section>
 
+    </div>
+
+    <div id="panel-tax" data-panel class="hidden">
     <!-- Tax guide (always visible, collapsible) -->
     <section id="tax-guide" class="max-w-lg mx-auto px-4 pt-4">
       <details open class="bg-ghibli-white drawn-border p-4">
@@ -202,12 +215,16 @@
       </details>
     </section>
 
+    </div>
+
+    <div id="panel-itinerary" data-panel class="hidden">
     <!-- Day Tabs -->
-    <nav class="sticky top-[90px] z-30 bg-ghibli-white/90 backdrop-blur-sm py-2 px-2 overflow-x-auto hide-scrollbar shadow-sm">
+    <nav class="py-2 px-2 overflow-x-auto hide-scrollbar mt-2">
         <div class="flex gap-2 min-w-max px-2" id="day-tabs"></div>
     </nav>
 
     <main class="p-4 max-w-lg mx-auto" id="main-content"></main>
+    </div>
 
     <!-- Floating Buttons -->
     <div class="fab-stack fixed bottom-6 right-4 flex flex-col gap-3 z-40">
@@ -1113,6 +1130,20 @@
         // =====================================================
         // 9. 初始化
         // =====================================================
+
+        // =====================================================
+        // 分類切換：天氣 / 新稅 / 行程
+        // =====================================================
+        window.showCategory = function (cat) {
+            document.querySelectorAll('[data-panel]').forEach(p => p.classList.toggle('hidden', p.id !== 'panel-' + cat));
+            document.querySelectorAll('.cat-btn').forEach(b => {
+                const on = b.dataset.cat === cat;
+                b.classList.toggle('tab-active', on);
+                b.classList.toggle('bg-white', !on);
+                b.classList.toggle('text-ghibli-brown', !on);
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
 
         function initApp() {
             updateCountdown();
