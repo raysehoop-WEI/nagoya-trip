@@ -1,0 +1,1092 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>名古屋親子遊</title>
+<style>
+        body {
+            background-color: #FDFBF7;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+            color: #4A4A4A;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .drawn-border {
+            border: 2px solid #8DB596;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            background: #fff;
+            box-shadow: 2px 4px 10px rgba(0,0,0,0.05);
+        }
+        .drawn-border-sm {
+            border: 1.5px solid #98C1D9;
+            border-radius: 15px 225px 15px 255px/255px 15px 225px 15px;
+        }
+        .tab-active {
+            background-color: #8DB596;
+            color: white;
+            border-color: #8DB596;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(141, 181, 150, 0.3);
+        }
+        .timeline-line {
+            position: absolute;
+            left: 1rem;
+            top: 2rem;
+            bottom: -1rem;
+            width: 2px;
+            background: repeating-linear-gradient(to bottom, #C1D7C3, #C1D7C3 5px, transparent 5px, transparent 10px);
+        }
+        .timeline-dot {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background-color: #8DB596;
+            border: 2px solid #FDFBF7;
+            position: absolute;
+            left: 0.5rem;
+            z-index: 10;
+        }
+        @keyframes float {
+            0% { transform: translateX(0px); }
+            50% { transform: translateX(10px); }
+            100% { transform: translateX(0px); }
+        }
+        .float-anim { animation: float 6s ease-in-out infinite; }
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .toast-enter { animation: slideUp 0.3s ease-out forwards; }
+        input[type="checkbox"] {
+            accent-color: #8DB596;
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+        header.sticky { top: env(safe-area-inset-top, 0px) !important; }
+        nav.sticky { top: calc(90px + env(safe-area-inset-top, 0px)) !important; }
+        .fab-stack { bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)) !important; }
+        :root { color-scheme: light; }
+        a:focus-visible, button:focus-visible, select:focus-visible { outline: 2px solid #8B5A2B; outline-offset: 2px; }
+        @media (prefers-reduced-motion: reduce) { .float-anim, .toast-enter { animation: none !important; } }
+    </style>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ghibli: {
+                            green: '#8DB596',
+                            lightgreen: '#C1D7C3',
+                            blue: '#98C1D9',
+                            lightblue: '#E0EAEF',
+                            white: '#FDFBF7',
+                            brown: '#8B5A2B',
+                            text: '#4A4A4A',
+                            accent: '#E6A57E'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'sans-serif'],
+                        ghibli: ['"Kosugi Maru"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+<link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+<div class="font-sans antialiased pb-24">
+
+
+    <!-- Background decorative clouds -->
+    <div class="fixed top-10 left-[-20px] opacity-40 float-anim pointer-events-none z-[-1]">
+        <svg width="120" height="60" viewBox="0 0 24 24" fill="#C1D7C3"><path d="M17.5 19c-2.48 0-4.5-2.02-4.5-4.5 0-1.02.35-1.95.94-2.7-.27-.08-.57-.12-.87-.12-2.13 0-3.9 1.63-4.13 3.73-.24-.13-.51-.21-.8-.21-1.1 0-2 .9-2 2s.9 2 2 2h9.36c.21 0 .41-.04.6-.09V19h-.6zM13 14.5c0-1.84 1.1-3.43 2.68-4.14C14.86 8.44 12.63 7 10 7c-3.31 0-6 2.69-6 6 0 .48.06.94.16 1.38C2.33 14.88 1 16.29 1 18c0 1.93 1.57 3.5 3.5 3.5h13c2.76 0 5-2.24 5-5s-2.24-5-5-5c-1.57 0-3.04.73-4 1.93-.31-.28-.65-.51-1.02-.68-.22-.61-.46-1.19-1.48-1.25z"/></svg>
+    </div>
+    <div class="fixed top-40 right-[-30px] opacity-30 float-anim pointer-events-none z-[-1]" style="animation-delay: 2s; transform: scale(0.8);">
+        <svg width="120" height="60" viewBox="0 0 24 24" fill="#98C1D9"><path d="M17.5 19c-2.48 0-4.5-2.02-4.5-4.5 0-1.02.35-1.95.94-2.7-.27-.08-.57-.12-.87-.12-2.13 0-3.9 1.63-4.13 3.73-.24-.13-.51-.21-.8-.21-1.1 0-2 .9-2 2s.9 2 2 2h9.36c.21 0 .41-.04.6-.09V19h-.6zM13 14.5c0-1.84 1.1-3.43 2.68-4.14C14.86 8.44 12.63 7 10 7c-3.31 0-6 2.69-6 6 0 .48.06.94.16 1.38C2.33 14.88 1 16.29 1 18c0 1.93 1.57 3.5 3.5 3.5h13c2.76 0 5-2.24 5-5s-2.24-5-5-5c-1.57 0-3.04.73-4 1.93-.31-.28-.65-.51-1.02-.68-.22-.61-.46-1.19-1.48-1.25z"/></svg>
+    </div>
+
+    <!-- App Header -->
+    <header class="bg-ghibli-lightgreen/80 backdrop-blur-sm sticky top-0 z-40 px-4 py-3 shadow-sm rounded-b-2xl">
+        <div class="flex justify-between items-center mb-2">
+            <h1 class="font-ghibli text-xl font-bold text-ghibli-brown flex items-center gap-2">
+                <i class="fa-solid fa-leaf text-ghibli-green"></i>
+                名古屋親子遊
+            </h1>
+            <div id="countdown-badge" class="bg-ghibli-white px-3 py-1 rounded-full text-sm font-bold text-ghibli-brown shadow-sm drawn-border-sm">
+                計算中...
+            </div>
+        </div>
+        <div class="flex justify-between items-center text-sm">
+            <div class="flex items-center gap-1 bg-white/60 px-2 py-1 rounded-lg">
+                <i class="fa-solid fa-location-dot text-ghibli-accent"></i>
+                <select id="manual-location" class="bg-transparent border-none outline-none font-bold text-ghibli-text appearance-none">
+                    <option value="auto">自動定位 (需授權)</option>
+                    <option value="hotel">飯店(榮/久屋大通)</option>
+                    <option value="nagoya_st">名古屋車站</option>
+                    <option value="lego">樂高樂園</option>
+                    <option value="ghibli">吉卜力公園</option>
+                    <option value="shirakawa">白川鄉</option>
+                    <option value="takayama">飛驒高山</option>
+                    <option value="inuyama">犬山城</option>
+                    <option value="nagashima">長島</option>
+                </select>
+                <i class="fa-solid fa-caret-down text-xs text-gray-500"></i>
+            </div>
+            <div id="header-weather" class="flex items-center gap-1 font-bold text-ghibli-text">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Weather + outfit card (follows the selected day) -->
+    <section id="outfit-section" class="max-w-lg mx-auto px-4 pt-4">
+        <div id="outfit-card" class="bg-ghibli-white drawn-border p-4 text-sm text-gray-500 text-center">
+            <i class="fa-solid fa-spinner fa-spin text-ghibli-green"></i> 天氣與穿搭載入中…
+        </div>
+    </section>
+
+    <!-- Tax guide (always visible, collapsible) -->
+    <section id="tax-guide" class="max-w-lg mx-auto px-4 pt-4">
+      <details open class="bg-ghibli-white drawn-border p-4">
+        <summary class="font-ghibli text-lg font-bold text-ghibli-brown cursor-pointer flex items-center gap-2">
+            <i class="fa-solid fa-yen-sign text-ghibli-green"></i> 日本新退稅制度
+            <span class="text-xs bg-ghibli-accent text-white px-2 py-0.5 rounded-full">11/1 起</span>
+        </summary>
+        <div class="mt-3 bg-ghibli-lightblue p-3 rounded-2xl drawn-border-sm text-sm leading-relaxed">
+            🐷 <b>小豬撲滿比喻：</b>以前店員直接少收你 10% 的稅。現在要先把稅放進撲滿（付全價），離開日本時海關檢查完，撲滿才打開還給你。
+        </div>
+        <div class="mt-3 grid grid-cols-2 gap-2 text-center text-sm">
+            <div class="bg-white p-2 rounded-xl drawn-border-sm"><div class="text-xs text-gray-500">10/31 以前</div><div class="font-bold">店裡直接少付稅</div></div>
+            <div class="bg-ghibli-lightgreen p-2 rounded-xl drawn-border-sm"><div class="text-xs text-gray-600">11/1 起（我們適用）</div><div class="font-bold">先付全價，機場退稅</div></div>
+        </div>
+        <ol class="mt-4 space-y-2">
+            <li class="relative flex gap-3 items-start bg-white p-3 rounded-2xl drawn-border-sm">
+                <div class="shrink-0 w-8 h-8 rounded-full bg-ghibli-green text-white font-bold flex items-center justify-center">1</div>
+                <div class="flex-grow"><div class="font-bold text-ghibli-brown">🛍️ 買東西，付全價</div><div class="text-sm mt-0.5 leading-relaxed">找有 Tax-free 標誌的店，給店員看護照。價錢含 10% 的稅，先照付。</div></div>
+            </li>
+            <li class="relative flex gap-3 items-start bg-white p-3 rounded-2xl drawn-border-sm">
+                <div class="shrink-0 w-8 h-8 rounded-full bg-ghibli-green text-white font-bold flex items-center justify-center">2</div>
+                <div class="flex-grow"><div class="font-bold text-ghibli-brown">🧾 收好單子，東西別丟</div><div class="text-sm mt-0.5 leading-relaxed">單據放同一個袋子。買的東西要帶著，不能先用掉或送人。</div></div>
+            </li>
+            <li class="relative flex gap-3 items-start bg-white p-3 rounded-2xl drawn-border-sm">
+                <div class="shrink-0 w-8 h-8 rounded-full bg-ghibli-green text-white font-bold flex items-center justify-center">3</div>
+                <div class="flex-grow"><div class="font-bold text-ghibli-brown">🧳 免稅品先放手提包</div><div class="text-sm mt-0.5 leading-relaxed">先不要塞進托運行李，等一下要拿給海關看。</div></div>
+            </li>
+            <li class="relative flex gap-3 items-start bg-white p-3 rounded-2xl drawn-border-sm">
+                <div class="shrink-0 w-8 h-8 rounded-full bg-ghibli-green text-white font-bold flex items-center justify-center">4</div>
+                <div class="flex-grow"><div class="font-bold text-ghibli-brown">✈️ 到機場，先找海關</div><div class="text-sm mt-0.5 leading-relaxed">出發前先讓海關檢查，確認東西真的帶出日本。要提早到機場！</div></div>
+            </li>
+            <li class="relative flex gap-3 items-start bg-ghibli-lightgreen p-3 rounded-2xl drawn-border-sm">
+                <div class="shrink-0 w-8 h-8 rounded-full bg-ghibli-green text-white font-bold flex items-center justify-center">5</div>
+                <div class="flex-grow"><div class="font-bold text-ghibli-brown">💰 撲滿打開，稅金回家</div><div class="text-sm mt-0.5 leading-relaxed">海關確認完成，那 10% 的稅就還給你。</div></div>
+            </li>
+        </ol>
+        <div class="mt-4 font-bold text-ghibli-brown">簡易 Q&amp;A</div>
+        <div class="mt-2 space-y-2">
+            <div class="bg-white p-3 rounded-2xl drawn-border-sm"><div class="font-bold text-ghibli-brown text-sm">❓ 為什麼這次要先付全價？</div><div class="text-sm mt-1 leading-relaxed">💡 因為 11/1 起改成「退稅制」：店裡不再當場扣稅，要等海關確認東西帶出日本，才把稅退給你。</div></div>
+            <div class="bg-white p-3 rounded-2xl drawn-border-sm"><div class="font-bold text-ghibli-brown text-sm">❓ 東西沒帶出日本會怎樣？</div><div class="text-sm mt-1 leading-relaxed">💡 會被補收稅金，還可能受罰。所以免稅買的東西一定要帶出去。</div></div>
+            <div class="bg-white p-3 rounded-2xl drawn-border-sm"><div class="font-bold text-ghibli-brown text-sm">❓ 要在幾天內帶出日本？</div><div class="text-sm mt-1 leading-relaxed">💡 購買後 90 天內。我們這趟 11/11 到 11/16，買了就是帶回台灣，沒問題。</div></div>
+            <div class="bg-white p-3 rounded-2xl drawn-border-sm"><div class="font-bold text-ghibli-brown text-sm">❓ 可以先放進托運行李嗎？</div><div class="text-sm mt-1 leading-relaxed">💡 建議先放手提包，先給海關檢查完，再去託運。</div></div>
+            <div class="bg-white p-3 rounded-2xl drawn-border-sm"><div class="font-bold text-ghibli-brown text-sm">❓ 買的零食、藥妝可以先開來用嗎？</div><div class="text-sm mt-1 leading-relaxed">💡 先別。海關要看到東西有帶出日本，吃掉或用掉就可能算沒出口。想當場吃的，可以另外買不退稅的。</div></div>
+            <div class="bg-white p-3 rounded-2xl drawn-border-sm"><div class="font-bold text-ghibli-brown text-sm">❓ 要買多少才能退稅？</div><div class="text-sm mt-1 leading-relaxed">💡 以前是滿 5,000 日圓，現在不同商品可以合併計算。各店規定不同，結帳時請店員確認。</div></div>
+        </div>
+        <div class="mt-3 text-xs text-gray-500 leading-relaxed">⚠️ 實際規定以現場店員和機場海關公告為準。<a href="https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00028.html" target="_blank" rel="noopener" class="text-ghibli-blue underline">官方說明（日本觀光廳）</a></div>
+      </details>
+    </section>
+
+    <!-- Day Tabs -->
+    <nav class="sticky top-[90px] z-30 bg-ghibli-white/90 backdrop-blur-sm py-2 px-2 overflow-x-auto hide-scrollbar shadow-sm">
+        <div class="flex gap-2 min-w-max px-2" id="day-tabs"></div>
+    </nav>
+
+    <main class="p-4 max-w-lg mx-auto" id="main-content"></main>
+
+    <!-- Floating Buttons -->
+    <div class="fab-stack fixed bottom-6 right-4 flex flex-col gap-3 z-40">
+        <button id="btn-ai-chat" class="w-14 h-14 rounded-full bg-ghibli-blue text-white shadow-lg flex items-center justify-center text-2xl border-4 border-white transition transform hover:scale-110 active:scale-95" aria-label="日語小幫手">
+            <i class="fa-solid fa-language"></i>
+        </button>
+        <button id="btn-checklist" class="w-14 h-14 rounded-full bg-ghibli-accent text-white shadow-lg flex items-center justify-center text-2xl border-4 border-white transition transform hover:scale-110 active:scale-95" aria-label="待辦清單">
+            <i class="fa-solid fa-clipboard-list"></i>
+        </button>
+    </div>
+
+    <!-- AI Japanese Modal -->
+    <div id="ai-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex-col justify-end">
+        <div class="bg-ghibli-white rounded-t-3xl p-6 h-[75vh] flex flex-col drawn-border">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-ghibli text-xl font-bold text-ghibli-brown flex items-center gap-2">
+                    <i class="fa-solid fa-robot text-ghibli-blue"></i> AI 旅伴會話
+                </h2>
+                <button id="close-ai-modal" class="text-gray-500 text-2xl p-2"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="flex-grow overflow-y-auto mb-4" id="ai-chat-history">
+                <div class="bg-ghibli-lightblue p-4 rounded-2xl rounded-tl-sm mb-4 drawn-border-sm text-sm">
+                    嗨！我是你的 AI 旅伴。點擊下方按鈕，我會配合目前選的那一天行程，教你一句實用的日文喔！
+                </div>
+            </div>
+            <div class="mt-auto flex flex-col gap-2">
+                <button id="btn-generate-phrase" class="w-full bg-ghibli-green text-white font-bold py-3 rounded-xl shadow-md flex justify-center items-center gap-2 active:bg-ghibli-brown">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> 產生情境會話
+                </button>
+                <div id="ai-source-note" class="text-xs text-center text-gray-500">優先使用 Gemini API 生成，失敗時改用內建 36 句</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checklist Modal -->
+    <div id="checklist-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex-col justify-end">
+        <div class="bg-ghibli-white rounded-t-3xl p-6 h-[80vh] flex flex-col drawn-border">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-ghibli text-xl font-bold text-ghibli-brown flex items-center gap-2">
+                    <i class="fa-solid fa-clipboard-check text-ghibli-accent"></i> 出發前待辦清單
+                </h2>
+                <button id="close-checklist-modal" class="text-gray-500 text-2xl p-2"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="flex-grow overflow-y-auto" id="checklist-container"></div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="fixed bottom-24 left-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <script>
+        // =====================================================
+        // 1. 基本資料
+        // =====================================================
+
+        const TRIP_START = new Date('2026-11-11T00:00:00+09:00'); // 日本時間
+        const TRIP_END = new Date('2026-11-16T23:59:59+09:00');
+
+        // climate：天氣抓不到時使用的「11 月中旬往年平均」參考值（概略）
+        const LOCATIONS = {
+            hotel:     { lat: 35.1715, lon: 136.9075, name: "飯店 (久屋大通)", climate: { high: 17, low: 8 } },
+            nagoya_st: { lat: 35.1709, lon: 136.8815, name: "名古屋車站",     climate: { high: 17, low: 8 } },
+            lego:      { lat: 35.0500, lon: 136.8430, name: "樂高樂園",       climate: { high: 17, low: 9 } },
+            ghibli:    { lat: 35.1720, lon: 137.0910, name: "吉卜力公園",     climate: { high: 16, low: 6 } },
+            shirakawa: { lat: 36.2570, lon: 136.9060, name: "白川鄉",         climate: { high: 11, low: 2 } },
+            takayama:  { lat: 36.1460, lon: 137.2520, name: "飛驒高山",       climate: { high: 12, low: 1 } },
+            inuyama:   { lat: 35.3880, lon: 136.9390, name: "犬山城",         climate: { high: 16, low: 6 } },
+            nagashima: { lat: 35.0330, lon: 136.7200, name: "長島",           climate: { high: 17, low: 8 } }
+        };
+
+        // 餐廳 verified: true = 已查證過店家資訊；false = 尚未查證，畫面會顯示「資訊待確認」
+        // mapQuery：Google 地圖搜尋用的關鍵字
+        const ITINERARY = [
+            {
+                day: 1, iso: '2026-11-11', label: '11/11 (三)', title: '抵達名古屋',
+                weatherLocs: ['hotel'],
+                events: [
+                    { time: '抵達後', title: '中部國際機場', desc: '搭乘包車前往飯店 (西鉄ホテル クルーム名古屋，久屋大通站步行約1分)。' },
+                    { time: '晚上', title: 'Check-in & 休息', desc: '安頓行李，準備吃宵夜。' },
+                    { time: '宵夜', title: '拉麵或居酒屋', desc: '飯店步行 10 分鐘內找店。' }
+                ],
+                restaurants: [
+                    { name: '飯店附近拉麵（地圖搜尋）', isSearch: true, tags: ['🔍 現場挑選'], desc: '直接開 Google 地圖找久屋大通站附近的拉麵店，看營業時間是否到深夜。', mapQuery: 'ラーメン 久屋大通駅' },
+                    { name: '飯店附近居酒屋（地圖搜尋）', isSearch: true, tags: ['🔍 現場挑選'], desc: '8 個人建議挑有桌位或包廂的店，先打電話或請飯店櫃台幫忙問。', mapQuery: '居酒屋 久屋大通駅' },
+                    { name: '一蘭拉麵（名古屋榮一帶）', verified: false, tags: ['🌏 外語點餐單', '🚭 禁菸'], desc: '一人一格的座位，推車需收起，人多時不容易坐在一起。', mapQuery: '一蘭 栄' },
+                    { name: '世界の山ちゃん（榮一帶分店）', verified: false, tags: ['🍗 名古屋雞翅'], desc: '名古屋代表性的胡椒雞翅連鎖居酒屋，榮附近分店多。', mapQuery: '世界の山ちゃん 栄' },
+                    { name: '鳥貴族（榮一帶分店）', verified: false, tags: ['📱 平板點餐'], desc: '均一價串燒連鎖店，點餐沒壓力，但店內可能較吵雜。', mapQuery: '鳥貴族 栄' }
+                ],
+                smartReminders: ['👶 抵達日比較累，備好安撫玩具與小零食，宵夜不要吃太晚。']
+            },
+            {
+                day: 2, iso: '2026-11-12', label: '11/12 (四)', title: '樂高樂園',
+                weatherLocs: ['lego', 'hotel'],
+                events: [
+                    { time: '白天', title: '樂高樂園', desc: '適合 3 歲小孩，預計 17:00 結束。' },
+                    { time: '18:00', title: '晚餐：豬排', desc: '中日大樓 3F カツレツMATUMURA bis（榮站直結）。' },
+                    { time: '晚上', title: '榮逛街 / 夜景', desc: '中日大樓採買 或 中部電力 MIRAI TOWER。' }
+                ],
+                restaurants: [
+                    { name: 'カツレツMATUMURA bis CHUNICHI BUILDING', verified: true, tags: ['📅 可網路預約', '👶 歡迎兒童', '🚭 禁菸', '💴 約2000~4000円'], desc: '低溫炸豬排，中日大樓 3F。晚餐 17:00-22:00（L.O. 21:00）。套餐限小學高年級以上，小孩可點單品。遲到超過 10 分鐘可能先帶候位客人。', mapQuery: 'カツレツMATUMURA bis 中日ビル', url: 'https://tabelog.com/tw/aichi/A2301/A230103/23087936/' }
+                ],
+                smartReminders: [
+                    'ℹ️ 中日大樓、MIRAI TOWER 都在飯店步行範圍內，晚餐後可直接走過去。',
+                    '🌬️ 樂高樂園在海邊，風大體感冷，記得帶防風外套。',
+                    '👶 樂園設施需排隊，備妥推車與小點心。'
+                ]
+            },
+            {
+                day: 3, iso: '2026-11-13', label: '11/13 (五)', title: '吉卜力公園',
+                weatherLocs: ['ghibli', 'hotel'],
+                events: [
+                    { time: '白天', title: '吉卜力公園', desc: '依購買的票券範圍參觀，園區大、坡道多。' },
+                    { time: '下午', title: '市區逛街', desc: '百貨、藥妝、PS5/電玩店採買。' },
+                    { time: '晚上', title: '晚餐：高級燒肉', desc: '家族聚餐，享受和牛。' }
+                ],
+                restaurants: [
+                    { name: '叙々苑（名古屋分店）', verified: false, tags: ['🥩 高級燒肉連鎖', '💴 高價位'], desc: '東京起家的高級燒肉連鎖，服務與肉質穩定。是否有包廂、兒童椅請預約時確認。', mapQuery: '叙々苑 名古屋' },
+                    { name: '飛騨牛 馬喰一代（名古屋分店）', verified: false, tags: ['🥩 飛驒牛', '📅 建議預約'], desc: '以飛驒牛為主的燒肉店。名古屋分店位置與座位請自行確認。', mapQuery: '馬喰一代 名古屋' },
+                    { name: '飯店附近燒肉（地圖搜尋）', isSearch: true, tags: ['🔍 現場挑選'], desc: '搜尋久屋大通／榮的燒肉店，篩選「有包廂」「可預約」。', mapQuery: '焼肉 個室 栄 名古屋' }
+                ],
+                smartReminders: [
+                    '🚶 吉卜力公園步行量大、坡道多：帶水壺、穿好走的鞋。',
+                    '👶 部分室內設施推車需停在指定地點，建議備好背巾。'
+                ]
+            },
+            {
+                day: 4, iso: '2026-11-14', label: '11/14 (六)', title: '白川鄉 & 高山',
+                weatherLocs: ['shirakawa', 'takayama'],
+                events: [
+                    { time: '全天', title: '包車一日遊', desc: '白川鄉合掌村、飛驒高山老街。' },
+                    { time: '晚上', title: '晚餐：螃蟹吃到飽', desc: '名古屋 かに銀 名駅店（或備案）。' }
+                ],
+                restaurants: [
+                    { name: '名古屋 かに銀 名駅店', verified: true, tags: ['🦀 吃到飽', '👶 可帶小孩（店家標示）', '🚪 暖簾半包廂', '💴 約7000~17600円'], desc: '名古屋站新幹線口步行約 1 分，蟹、壽司、一品料理吃到飽，有 6 人以下包廂。8 人建議提早預約。', mapQuery: '名古屋 かに銀 名駅店', url: 'https://tabelog.com/aichi/A2301/A230101/23090891/' },
+                    { name: 'かにざんまい 名古屋栄店（備案）', verified: true, tags: ['🦀 吃到飽', '📍 近飯店', '💴 約14000円'], desc: '中区栄4-5-8 エアリビル 8F，帝王蟹與松葉蟹吃到飽（100 分鐘）。兒童價與設施請預約時確認。', mapQuery: 'かにざんまい 名古屋栄店' }
+                ],
+                smartReminders: [
+                    '⚠️ 11/14 是週六，白川鄉人潮較多，建議早點出發。',
+                    '❄️ 山區可能接近 0°C 或初雪：手套、暖暖包、防風防水外套。',
+                    '🏠 合掌屋多為民宅，不要擅自進入或拍攝屋內。',
+                    '🚐 若遇降雪，以安全為優先，必要時與包車司機調整行程。'
+                ]
+            },
+            {
+                day: 5, iso: '2026-11-15', label: '11/15 (日)', title: '犬山城 & 長島',
+                weatherLocs: ['inuyama', 'nagashima'],
+                events: [
+                    { time: '早上', title: '犬山城', desc: '日本國寶天守，城下町散策。' },
+                    { time: '下午', title: '麵包超人博物館 & Outlet', desc: '三重縣桑名市長島。小孩放電，大人血拚。' },
+                    { time: '晚上', title: '晚餐：飯店周邊', desc: '隨興選擇居酒屋或燒肉。' }
+                ],
+                restaurants: [
+                    { name: '飯店附近居酒屋（地圖搜尋）', isSearch: true, tags: ['🔍 現場挑選'], desc: '搜尋久屋大通／榮附近的居酒屋，挑有桌位、評價好的店。', mapQuery: '居酒屋 久屋大通駅' },
+                    { name: '飯店附近燒肉（地圖搜尋）', isSearch: true, tags: ['🔍 現場挑選'], desc: '想再吃一次燒肉可以從這裡找，週日晚上建議先打電話。', mapQuery: '焼肉 久屋大通駅' }
+                ],
+                smartReminders: [
+                    'ℹ️ 犬山城到長島車程約 1 小時，時間抓寬鬆一點。',
+                    '🏯 犬山城天守內樓梯很陡，推車無法上去，小孩需要抱或牽好。',
+                    '⚠️ 週日麵包超人博物館人潮多，需看好小孩。'
+                ]
+            },
+            {
+                day: 6, iso: '2026-11-16', label: '11/16 (一)', title: '準備返家',
+                weatherLocs: ['hotel'],
+                events: [
+                    { time: '早上', title: '飯店 Check-out', desc: '確認遺漏物品。' },
+                    { time: '出發', title: '包車送機', desc: '前往中部國際機場，搭機返台。' }
+                ],
+                restaurants: [],
+                smartReminders: [
+                    '💴 免稅新制：11/1 起購物先付含稅價，出境時在機場給海關確認商品後才退稅。免稅品先不要塞進托運行李，提早到機場辦理。',
+                    '👶 上車前讓小孩先上廁所/換尿布。'
+                ]
+            }
+        ];
+
+        const CHECKLIST_ITEMS = [
+            { id: 'c1', text: '🎫 購買吉卜力公園門票（11 月票已開賣，可能有場次售完）', critical: true },
+            { id: 'c2', text: '🧱 到官網確認 11/12（四）樂高樂園有營業，並購票', critical: true },
+            { id: 'c3', text: '🍖 預約 Day2 豬排店（カツレツMATUMURA，Tabelog 可網路預約）', critical: false },
+            { id: 'c4', text: '🦀 預約 Day4 かに銀 名駅店（8 人建議訂包廂）', critical: false },
+            { id: 'c5', text: '🥩 預約 Day3 高級燒肉', critical: false },
+            { id: 'c6', text: '🚐 向包車確認：Day4 雪胎與降雪應變、兒童座椅 x2、每天上下車時間', critical: true },
+            { id: 'c7', text: '📱 登錄 Visit Japan Web（入境與免稅退稅手續會更順）', critical: true },
+            { id: 'c8', text: '👶 兒童常備藥（退燒、腸胃、防蚊）', critical: true },
+            { id: 'c9', text: '👶 輕便推車與雨罩、背巾', critical: true },
+            { id: 'c10', text: '🧥 山區保暖衣物：手套、毛帽、暖暖包（Day4）', critical: false }
+        ];
+
+        // 內建日語會話（Gemini API 用不了時使用）。days：特別適合哪幾天，空陣列 = 每天通用
+        const FALLBACK_PHRASES = [
+            { ctx: "餐廳", days: [], jp: "子供用の椅子はありますか？", kana: "こどもようの いすは ありますか？", romaji: "Kodomo-yō no isu wa arimasu ka?", zh: "請問有兒童椅嗎？" },
+            { ctx: "餐廳", days: [], jp: "子供用の食器をお願いします。", kana: "こどもようの しょっきを おねがいします。", romaji: "Kodomo-yō no shokki o onegaishimasu.", zh: "請給我兒童餐具。" },
+            { ctx: "餐廳", days: [], jp: "8人です。予約していません。", kana: "はちにんです。よやくしていません。", romaji: "Hachi-nin desu. Yoyaku shite imasen.", zh: "我們 8 個人，沒有預約。" },
+            { ctx: "餐廳", days: [2, 4], jp: "予約した〇〇です。", kana: "よやくした 〇〇です。", romaji: "Yoyaku shita 〇〇 desu.", zh: "我是有預約的〇〇。" },
+            { ctx: "餐廳", days: [], jp: "ベビーカーのまま入れますか？", kana: "ベビーカーのまま はいれますか？", romaji: "Bebīkā no mama hairemasu ka?", zh: "推車可以直接推進去嗎？" },
+            { ctx: "點餐", days: [], jp: "これを一つください。", kana: "これを ひとつ ください。", romaji: "Kore o hitotsu kudasai.", zh: "這個請給我一份。" },
+            { ctx: "點餐", days: [], jp: "おすすめは何ですか？", kana: "おすすめは なんですか？", romaji: "Osusume wa nan desu ka?", zh: "推薦什麼呢？" },
+            { ctx: "點餐", days: [], jp: "辛くないものはありますか？", kana: "からくないものは ありますか？", romaji: "Karakunai mono wa arimasu ka?", zh: "有不辣的嗎？（給小孩吃）" },
+            { ctx: "點餐", days: [], jp: "お水をください。", kana: "おみずを ください。", romaji: "Omizu o kudasai.", zh: "請給我水。" },
+            { ctx: "結帳", days: [], jp: "お会計をお願いします。", kana: "おかいけいを おねがいします。", romaji: "Okaikei o onegaishimasu.", zh: "麻煩結帳。" },
+            { ctx: "結帳", days: [], jp: "カードで払えますか？", kana: "カードで はらえますか？", romaji: "Kādo de haraemasu ka?", zh: "可以刷卡嗎？" },
+            { ctx: "結帳", days: [], jp: "別々に払えますか？", kana: "べつべつに はらえますか？", romaji: "Betsubetsu ni haraemasu ka?", zh: "可以分開付嗎？" },
+            { ctx: "螃蟹吃到飽", days: [4], jp: "食べ放題は何分ですか？", kana: "たべほうだいは なんぷんですか？", romaji: "Tabehōdai wa nanpun desu ka?", zh: "吃到飽是幾分鐘？" },
+            { ctx: "螃蟹吃到飽", days: [4], jp: "子供の料金はいくらですか？", kana: "こどもの りょうきんは いくらですか？", romaji: "Kodomo no ryōkin wa ikura desu ka?", zh: "小孩的費用是多少？" },
+            { ctx: "螃蟹吃到飽", days: [4], jp: "カニの食べ方を教えてください。", kana: "カニの たべかたを おしえて ください。", romaji: "Kani no tabekata o oshiete kudasai.", zh: "請教我怎麼吃螃蟹。" },
+            { ctx: "燒肉", days: [3, 5], jp: "個室はありますか？", kana: "こしつは ありますか？", romaji: "Koshitsu wa arimasu ka?", zh: "有包廂嗎？" },
+            { ctx: "燒肉", days: [3, 5], jp: "網を替えてください。", kana: "あみを かえて ください。", romaji: "Ami o kaete kudasai.", zh: "請幫我換烤網。" },
+            { ctx: "購物", days: [2, 3, 5], jp: "免税できますか？", kana: "めんぜい できますか？", romaji: "Menzei dekimasu ka?", zh: "可以免稅嗎？（11 月起是出境時退稅）" },
+            { ctx: "購物", days: [], jp: "これはどこにありますか？", kana: "これは どこに ありますか？", romaji: "Kore wa doko ni arimasu ka?", zh: "請問這個在哪裡？" },
+            { ctx: "藥妝店", days: [2, 3], jp: "子供が飲める風邪薬はありますか？", kana: "こどもが のめる かぜぐすりは ありますか？", romaji: "Kodomo ga nomeru kazegusuri wa arimasu ka?", zh: "有小孩能吃的感冒藥嗎？" },
+            { ctx: "購物", days: [], jp: "袋をください。", kana: "ふくろを ください。", romaji: "Fukuro o kudasai.", zh: "請給我袋子。" },
+            { ctx: "Outlet", days: [5], jp: "試着してもいいですか？", kana: "しちゃく しても いいですか？", romaji: "Shichaku shite mo ii desu ka?", zh: "可以試穿嗎？" },
+            { ctx: "電玩店", days: [3], jp: "PS5の在庫はありますか？", kana: "ピーエスファイブの ざいこは ありますか？", romaji: "Pī-esu faibu no zaiko wa arimasu ka?", zh: "請問 PS5 有現貨嗎？" },
+            { ctx: "飯店", days: [1, 6], jp: "荷物を預かってもらえますか？", kana: "にもつを あずかって もらえますか？", romaji: "Nimotsu o azukatte moraemasu ka?", zh: "可以寄放行李嗎？" },
+            { ctx: "飯店", days: [1], jp: "チェックインをお願いします。", kana: "チェックインを おねがいします。", romaji: "Chekkuin o onegaishimasu.", zh: "我要辦理入住。" },
+            { ctx: "飯店", days: [1], jp: "近くにコンビニはありますか？", kana: "ちかくに コンビニは ありますか？", romaji: "Chikaku ni konbini wa arimasu ka?", zh: "附近有便利商店嗎？" },
+            { ctx: "交通", days: [], jp: "〇〇までお願いします。", kana: "〇〇まで おねがいします。", romaji: "〇〇 made onegaishimasu.", zh: "請到〇〇。（搭計程車用）" },
+            { ctx: "交通", days: [], jp: "ここで降ります。", kana: "ここで おります。", romaji: "Koko de orimasu.", zh: "我在這裡下車。" },
+            { ctx: "求助", days: [], jp: "トイレはどこですか？", kana: "トイレは どこですか？", romaji: "Toire wa doko desu ka?", zh: "請問廁所在哪裡？" },
+            { ctx: "親子", days: [2, 3, 5], jp: "おむつを替える場所はありますか？", kana: "おむつを かえる ばしょは ありますか？", romaji: "Omutsu o kaeru basho wa arimasu ka?", zh: "有換尿布的地方嗎？" },
+            { ctx: "親子", days: [3, 5], jp: "ベビーカーを置く場所はありますか？", kana: "ベビーカーを おく ばしょは ありますか？", romaji: "Bebīkā o oku basho wa arimasu ka?", zh: "有放推車的地方嗎？" },
+            { ctx: "觀光", days: [3, 4, 5], jp: "写真を撮ってもらえますか？", kana: "しゃしんを とって もらえますか？", romaji: "Shashin o totte moraemasu ka?", zh: "可以幫我們拍照嗎？" },
+            { ctx: "觀光", days: [4], jp: "ここで写真を撮ってもいいですか？", kana: "ここで しゃしんを とっても いいですか？", romaji: "Koko de shashin o totte mo ii desu ka?", zh: "這裡可以拍照嗎？" },
+            { ctx: "緊急", days: [], jp: "子供が迷子になりました。", kana: "こどもが まいごに なりました。", romaji: "Kodomo ga maigo ni narimashita.", zh: "小孩走失了。" },
+            { ctx: "溝通", days: [], jp: "日本語は少しだけ話せます。", kana: "にほんごは すこしだけ はなせます。", romaji: "Nihongo wa sukoshi dake hanasemasu.", zh: "我只會說一點日文。" },
+            { ctx: "溝通", days: [], jp: "もう一度ゆっくり言ってください。", kana: "もういちど ゆっくり いって ください。", romaji: "Mō ichido yukkuri itte kudasai.", zh: "請再慢慢說一次。" }
+        ];
+
+        // 景點附近的推薦（座標為概略位置）
+        const POI_DATA = [
+            // 榮 / 飯店周邊
+            { name: "中日大樓", lat: 35.1693, lon: 136.9090, type: "購物", buy: "餐廳、伴手禮，3F 有豬排店" },
+            { name: "中部電力 MIRAI TOWER", lat: 35.1726, lon: 136.9083, type: "夜景", buy: "展望台夜景、塔內紀念品" },
+            { name: "松坂屋 名古屋店", lat: 35.1650, lon: 136.9077, type: "百貨", buy: "伴手禮、精品；南館有 Yodobashi 可逛 3C／電玩" },
+            // 名古屋車站
+            { name: "JR 名古屋高島屋", lat: 35.1708, lon: 136.8834, type: "百貨", buy: "地下街名古屋伴手禮（蝦餅、外郎糕等）" },
+            { name: "Bic Camera 名古屋站西店", lat: 35.1712, lon: 136.8798, type: "3C", buy: "家電、玩具、電玩（含 PS5）" },
+            // 樂高樂園
+            { name: "樂高樂園 The Big Shop", lat: 35.0503, lon: 136.8438, type: "紀念品", buy: "樂園限定樂高組、周邊" },
+            { name: "Maker's Pier", lat: 35.0494, lon: 136.8478, type: "購物", buy: "樂高樂園旁的商場，可吃飯、補給" },
+            // 吉卜力
+            { name: "吉卜力大倉庫 商店", lat: 35.1720, lon: 137.0890, type: "紀念品", buy: "吉卜力公園限定商品（熱門品常缺貨，先逛）" },
+            // 白川鄉
+            { name: "白川鄉 和田家", lat: 36.2589, lon: 136.9067, type: "景點", buy: "可入內參觀的合掌造代表建築" },
+            { name: "城山天守閣展望台", lat: 36.2627, lon: 136.9078, type: "景點", buy: "俯瞰合掌村的經典拍照點" },
+            // 高山
+            { name: "宮川朝市", lat: 36.1440, lon: 137.2590, type: "市集", buy: "早上限定，醃菜、さるぼぼ吊飾、小吃" },
+            { name: "高山 古い町並（三之町）", lat: 36.1410, lon: 137.2600, type: "老街", buy: "飛驒牛握壽司、御手洗糰子、さるぼぼ" },
+            // 犬山
+            { name: "犬山城下町", lat: 35.3835, lon: 136.9440, type: "老街", buy: "邊走邊吃的小吃、和風雜貨" },
+            // 長島
+            { name: "名古屋麵包超人兒童博物館", lat: 35.0323, lon: 136.7282, type: "親子", buy: "麵包工房的造型麵包、限定周邊" },
+            { name: "Jazz Dream 長島 Outlet", lat: 35.0308, lon: 136.7241, type: "Outlet", buy: "運動品牌、童裝、戶外用品" }
+        ];
+
+        const GUIDE_TIPS = [
+            "💡 名古屋市有條例：搭電扶梯請兩側站穩，不要在上面行走。",
+            "💡 結帳時把錢放在收銀台的小托盤上，不要直接遞給店員。",
+            "💡 日本街上垃圾桶很少，隨身帶一個塑膠袋裝垃圾。",
+            "💡 免稅新制：11/1 起購物先付含稅價，出境時在機場給海關看商品再退稅，購買時記得出示護照。",
+            "💡 日本計程車門是自動開關，不要自己拉門。",
+            "💡 部分小店只收現金，身上保留一些零錢和千元鈔。",
+            "💡 有些餐廳座位要脫鞋，幫小孩穿好穿脫的鞋。",
+            "💡 便利商店的 ATM 多可用海外金融卡提款。",
+            "💡 藥妝店的兒童藥看包裝上「小児用」字樣。",
+            "💡 泡奶的熱水不一定每間餐廳都有，建議自備保溫瓶。",
+            "💡 在電車或公車上講電話會被側目，盡量小聲。",
+            "💡 神社寺院和部分商店禁止拍照，留意現場標示。"
+        ];
+
+        // =====================================================
+        // 2. 狀態與工具函式
+        // =====================================================
+
+        function loadChecklist() {
+            try { return JSON.parse(localStorage.getItem('nagoya2026_checklist')) || {}; }
+            catch (e) { return {}; }
+        }
+
+        let state = {
+            currentDay: 1,
+            checklist: loadChecklist(),
+            weatherCache: {},
+            lastPhraseIndex: -1
+        };
+
+        function escapeHtml(str) {
+            return String(str ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        function mapsUrl(query) {
+            return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(query);
+        }
+
+        // 取得「日本時間」的今天日期字串 YYYY-MM-DD
+        function todayJST() {
+            const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+            return parts; // en-CA 格式即為 YYYY-MM-DD
+        }
+
+        function daysBetween(isoA, isoB) {
+            return Math.round((new Date(isoB + 'T00:00:00Z') - new Date(isoA + 'T00:00:00Z')) / 86400000);
+        }
+
+        function getTodayIndex() {
+            const idx = ITINERARY.findIndex(d => d.iso === todayJST());
+            if (idx >= 0) return idx;
+            return new Date() > TRIP_END ? ITINERARY.length - 1 : 0;
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const badge = document.getElementById('countdown-badge');
+            if (now < TRIP_START) {
+                const days = Math.ceil((TRIP_START - now) / 86400000);
+                badge.innerHTML = `<i class="fa-regular fa-clock"></i> 倒數 ${days} 天`;
+                badge.classList.replace('text-ghibli-brown', 'text-ghibli-green');
+            } else if (now <= TRIP_END) {
+                badge.innerHTML = `<i class="fa-solid fa-plane"></i> 旅行中`;
+                badge.classList.replace('text-ghibli-brown', 'text-ghibli-accent');
+            } else {
+                badge.innerText = "旅行結束";
+            }
+        }
+
+        // =====================================================
+        // 3. 天氣（Open-Meteo，免金鑰）
+        // =====================================================
+
+        // WMO 天氣代碼 → 圖示與文字
+        function describeWeatherCode(code) {
+            if (code === 0) return { icon: 'fa-sun', text: '晴' };
+            if (code <= 2) return { icon: 'fa-cloud-sun', text: '晴時多雲' };
+            if (code === 3) return { icon: 'fa-cloud', text: '陰' };
+            if (code === 45 || code === 48) return { icon: 'fa-smog', text: '霧' };
+            if (code >= 51 && code <= 57) return { icon: 'fa-cloud-rain', text: '毛毛雨' };
+            if (code >= 61 && code <= 67) return { icon: 'fa-cloud-showers-heavy', text: '雨' };
+            if (code >= 71 && code <= 77) return { icon: 'fa-snowflake', text: '雪' };
+            if (code >= 80 && code <= 82) return { icon: 'fa-cloud-sun-rain', text: '陣雨' };
+            if (code === 85 || code === 86) return { icon: 'fa-snowflake', text: '陣雪' };
+            if (code >= 95) return { icon: 'fa-cloud-bolt', text: '雷雨' };
+            return { icon: 'fa-cloud', text: '—' };
+        }
+
+        function climateFallback(locKey) {
+            const loc = LOCATIONS[locKey];
+            return { locKey, name: loc.name, high: loc.climate.high, low: loc.climate.low, rainProb: null, code: null, isForecast: false };
+        }
+
+        async function fetchWeather(locKey, iso) {
+            const cacheKey = `${locKey}_${iso}`;
+            if (state.weatherCache[cacheKey]) return state.weatherCache[cacheKey];
+
+            const loc = LOCATIONS[locKey];
+            const ahead = daysBetween(todayJST(), iso);
+
+            // Open-Meteo 只能預報約 16 天內，太遠的日期直接用往年平均
+            if (ahead > 15) {
+                const fb = climateFallback(locKey);
+                state.weatherCache[cacheKey] = fb;
+                return fb;
+            }
+
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}` +
+                `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max` +
+                `&timezone=Asia%2FTokyo&start_date=${iso}&end_date=${iso}`;
+
+            try {
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), 8000);
+                const res = await fetch(url, { signal: controller.signal });
+                clearTimeout(timer);
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
+                const d = data.daily;
+                if (!d || !d.time || !d.time.length) throw new Error('no daily data');
+
+                const result = {
+                    locKey,
+                    name: loc.name,
+                    high: Math.round(d.temperature_2m_max[0]),
+                    low: Math.round(d.temperature_2m_min[0]),
+                    rainProb: d.precipitation_probability_max ? d.precipitation_probability_max[0] : null,
+                    code: d.weather_code ? d.weather_code[0] : null,
+                    isForecast: true
+                };
+                state.weatherCache[cacheKey] = result;
+                return result;
+            } catch (e) {
+                console.warn('天氣抓取失敗，改用往年平均：', locKey, e);
+                return climateFallback(locKey); // 失敗不快取，下次切換時會再試
+            }
+        }
+
+        function weatherIcon(w) {
+            if (w.isForecast && w.code !== null) return describeWeatherCode(w.code);
+            return { icon: 'fa-calendar-days', text: '往年平均' };
+        }
+
+        // 依天氣自動產生提醒
+        function weatherReminders(list) {
+            const out = [];
+            const forecasts = list.filter(w => w.isForecast);
+            const rainy = forecasts.some(w => (w.rainProb !== null && w.rainProb >= 50) || [51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(w.code));
+            const snowy = forecasts.some(w => [71,73,75,77,85,86].includes(w.code));
+            const minLow = Math.min(...list.map(w => w.low));
+            const maxHigh = Math.max(...list.map(w => w.high));
+
+            if (rainy) out.push('<li class="text-blue-600 font-bold">☔ 今日降雨機率高，建議帶傘，並幫推車準備雨罩！</li>');
+            if (snowy) out.push('<li class="text-blue-800 font-bold">❄️ 預報有雪！穿防滑的鞋，包車行程以安全為優先。</li>');
+            if (minLow <= 3) out.push('<li class="text-ghibli-brown font-bold">🧣 最低溫 ' + minLow + '°C，非常冷：手套、毛帽、暖暖包都帶上。</li>');
+            else if (maxHigh <= 12) out.push('<li class="text-ghibli-brown font-bold">🧥 氣溫偏低，注意保暖，洋蔥式穿搭。</li>');
+            if (maxHigh - minLow >= 10) out.push('<li>🌡️ 早晚溫差大（' + minLow + '~' + maxHigh + '°C），外套方便穿脫最好。</li>');
+            if (!forecasts.length) out.push('<li class="text-gray-500">📅 目前顯示往年平均參考值。即時預報請點頁面最下方的「愛知天氣」「岐阜天氣」「三重天氣」（日本氣象廳）。</li>');
+            return out.join('');
+        }
+
+        // =====================================================
+        // 4. 畫面渲染
+        // =====================================================
+
+        function renderTabs() {
+            const container = document.getElementById('day-tabs');
+            container.innerHTML = ITINERARY.map((day, idx) => `
+                <button onclick="switchDay(${idx})"
+                        class="px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all border-2 border-transparent drawn-border-sm
+                        ${state.currentDay === idx + 1 ? 'tab-active' : 'bg-white text-ghibli-brown'}">
+                    Day ${day.day} <span class="text-xs font-normal opacity-80">${day.label.split(' ')[0]}</span>
+                </button>
+            `).join('');
+        }
+
+        async function switchDay(idx) {
+            state.currentDay = idx + 1;
+            renderTabs();
+            await renderContent(ITINERARY[idx]);
+        }
+        window.switchDay = switchDay;
+
+        function renderRestaurantCard(r) {
+            let badge = '';
+            if (r.isSearch) badge = '<div class="absolute top-0 right-0 bg-ghibli-lightgreen text-ghibli-brown text-[10px] px-2 py-1 rounded-bl-lg font-bold">地圖搜尋</div>';
+            else if (r.verified) badge = '<div class="absolute top-0 right-0 bg-green-100 text-green-700 text-[10px] px-2 py-1 rounded-bl-lg font-bold">✓ 已查證</div>';
+            else badge = '<div class="absolute top-0 right-0 bg-gray-200 text-gray-600 text-[10px] px-2 py-1 rounded-bl-lg font-bold">資訊待確認</div>';
+
+            return `
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 drawn-border-sm relative">
+                    ${badge}
+                    <h4 class="font-bold text-lg mb-2 pr-16">${escapeHtml(r.name)}</h4>
+                    <div class="flex flex-wrap gap-1 mb-2">
+                        ${r.tags.map(t => `<span class="bg-ghibli-lightblue text-ghibli-brown text-xs px-2 py-1 rounded-full">${escapeHtml(t)}</span>`).join('')}
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">${escapeHtml(r.desc)}</p>
+                    <div class="flex gap-2">
+                        <a href="${mapsUrl(r.mapQuery || r.name)}" target="_blank" rel="noopener" class="flex-1 bg-gray-100 text-center py-2 rounded-lg text-sm font-bold text-gray-700 hover:bg-gray-200"><i class="fa-solid fa-map-location-dot"></i> Google Maps</a>
+                        ${r.url ? `<a href="${r.url}" target="_blank" rel="noopener" class="flex-1 bg-orange-100 text-center py-2 rounded-lg text-sm font-bold text-orange-700 hover:bg-orange-200">Tabelog</a>` : ''}
+                    </div>
+                </div>`;
+        }
+
+        async function renderContent(dayObj) {
+            const container = document.getElementById('main-content');
+            container.innerHTML = '<div class="text-center py-10"><i class="fa-solid fa-spinner fa-spin text-3xl text-ghibli-green"></i></div>';
+
+            const weatherList = await Promise.all(dayObj.weatherLocs.map(k => fetchWeather(k, dayObj.iso)));
+
+            // 如果使用者在載入中切到別天，就不要覆蓋畫面
+            if (ITINERARY[state.currentDay - 1] !== dayObj) return;
+
+            // 頂部天氣顯示當天第一個地點
+            const main = weatherList[0];
+            const mainIcon = weatherIcon(main);
+            document.getElementById('header-weather').innerHTML = `
+                <i class="fa-solid ${mainIcon.icon} ${main.rainProb !== null && main.rainProb >= 50 ? 'text-blue-400' : 'text-orange-400'}"></i>
+                <span>${main.low}°~${main.high}°</span>`;
+            renderOutfit(dayObj, weatherList);
+
+            const weatherCards = weatherList.map(w => {
+                const ic = weatherIcon(w);
+                return `
+                    <div class="flex items-center gap-3 bg-ghibli-lightblue/50 p-3 rounded-xl border border-ghibli-blue/20">
+                        <div class="text-3xl text-ghibli-blue w-10 text-center"><i class="fa-solid ${ic.icon}"></i></div>
+                        <div class="flex-grow">
+                            <div class="text-sm font-bold">${escapeHtml(w.name)}　${w.low}°C ~ ${w.high}°C</div>
+                            <div class="text-xs text-gray-600">
+                                ${w.isForecast
+                                    ? `${ic.text}・降雨機率 ${w.rainProb ?? '—'}%`
+                                    : '<span class="text-ghibli-accent">往年平均參考值，非預報</span>'}
+                            </div>
+                        </div>
+                    </div>`;
+            }).join('');
+
+            container.innerHTML = `
+                <div class="bg-ghibli-white p-4 mb-6 relative overflow-hidden drawn-border">
+                    <div class="relative z-10">
+                        <h2 class="text-2xl font-ghibli font-bold text-ghibli-brown mb-1">${escapeHtml(dayObj.title)}</h2>
+                        <p class="text-sm text-gray-500 mb-3"><i class="fa-regular fa-calendar text-ghibli-accent"></i> ${dayObj.label}</p>
+                        <div class="space-y-2">${weatherCards}</div>
+                    </div>
+                    <div class="absolute -bottom-4 -right-4 opacity-20 transform rotate-45 pointer-events-none">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="#8DB596"><path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"/></svg>
+                    </div>
+                </div>
+
+                <div class="mb-6 bg-yellow-50 p-4 rounded-2xl border-2 border-yellow-200 relative">
+                    <div class="absolute -top-3 left-4 bg-yellow-200 px-2 py-0.5 rounded text-xs font-bold text-yellow-800">
+                        <i class="fa-solid fa-lightbulb"></i> 貼心提醒
+                    </div>
+                    <ul class="list-disc pl-4 mt-2 space-y-1 text-sm text-gray-700">
+                        ${weatherReminders(weatherList)}
+                        ${dayObj.smartReminders.map(r => `<li>${escapeHtml(r)}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <h3 class="font-ghibli text-lg font-bold text-ghibli-brown mb-4 pl-2 border-l-4 border-ghibli-green">今日行程</h3>
+                <div class="relative pl-6 mb-8">
+                    <div class="timeline-line"></div>
+                    ${dayObj.events.map(ev => `
+                        <div class="mb-6 relative">
+                            <div class="timeline-dot"></div>
+                            <div class="bg-white p-3 rounded-xl shadow-sm border border-gray-100 ml-2">
+                                <div class="font-bold text-ghibli-brown text-sm">${escapeHtml(ev.time)}</div>
+                                <div class="font-bold text-lg mb-1">${escapeHtml(ev.title)}</div>
+                                <div class="text-sm text-gray-600">${escapeHtml(ev.desc)}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                ${dayObj.restaurants.length ? `
+                    <h3 class="font-ghibli text-lg font-bold text-ghibli-brown mb-2 pl-2 border-l-4 border-ghibli-accent">餐廳指南</h3>
+                    <p class="text-xs text-gray-500 mb-4 pl-2">「已查證」的店家資訊有核對過；「資訊待確認」的請出發前自行確認營業時間與兒童設施。</p>
+                    <div class="space-y-4 mb-8">${dayObj.restaurants.map(renderRestaurantCard).join('')}</div>
+                ` : ''}
+
+                <div class="mt-8 pt-4 border-t border-gray-200">
+                    <h3 class="font-ghibli text-sm font-bold text-gray-500 mb-2">實用資訊連結</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="https://www.jma.go.jp/bosai/forecast/#area_type=offices&area_code=230000" target="_blank" rel="noopener" class="text-xs bg-ghibli-lightblue px-3 py-2 rounded-lg text-ghibli-brown font-bold"><i class="fa-solid fa-cloud-sun"></i> 愛知天氣（名古屋）</a>
+                        <a href="https://www.jma.go.jp/bosai/forecast/#area_type=offices&area_code=210000" target="_blank" rel="noopener" class="text-xs bg-ghibli-lightblue px-3 py-2 rounded-lg text-ghibli-brown font-bold"><i class="fa-solid fa-snowflake"></i> 岐阜天氣（白川鄉・高山）</a>
+                        <a href="https://www.jma.go.jp/bosai/forecast/#area_type=offices&area_code=240000" target="_blank" rel="noopener" class="text-xs bg-ghibli-lightblue px-3 py-2 rounded-lg text-ghibli-brown font-bold"><i class="fa-solid fa-cloud"></i> 三重天氣（長島）</a>
+                        <a href="https://www.jma.go.jp/bosai/warning/" target="_blank" rel="noopener" class="text-xs bg-gray-100 px-3 py-2 rounded-lg text-gray-600"><i class="fa-solid fa-triangle-exclamation"></i> 氣象廳警報</a>
+                        <a href="https://traininfo.jr-central.co.jp/shinkansen/sp/ja/index.html" target="_blank" rel="noopener" class="text-xs bg-gray-100 px-3 py-2 rounded-lg text-gray-600"><i class="fa-solid fa-train"></i> JR東海運行</a>
+                        <a href="https://www3.nhk.or.jp/nhkworld/zh/news/" target="_blank" rel="noopener" class="text-xs bg-gray-100 px-3 py-2 rounded-lg text-gray-600"><i class="fa-solid fa-newspaper"></i> NHK 中文新聞</a>
+                        <a href="https://shirakawa-go.gr.jp/" target="_blank" rel="noopener" class="text-xs bg-gray-100 px-3 py-2 rounded-lg text-gray-600"><i class="fa-solid fa-house-chimney"></i> 白川鄉觀光</a>
+                        <a href="https://www.nagoya-info.jp/news/detail/1405/" target="_blank" rel="noopener" class="text-xs bg-gray-100 px-3 py-2 rounded-lg text-gray-600"><i class="fa-solid fa-receipt"></i> 免稅新制說明</a>
+                    </div>
+                </div>`;
+        }
+
+
+        // =====================================================
+        // 4b. 今日天氣 + 穿搭建議（依天氣與當天行程）
+        // =====================================================
+
+        const DAY_OUTFIT_TIPS = {
+            1: ['✈️ 抵達日：衣服選好穿脫、不悶熱的，外套穿在身上，機艙和機場冷氣都偏冷。', '🍜 晚上要去吃宵夜，替小孩多帶一件薄外套。'],
+            2: ['🌬️ 樂高樂園在海邊，風大體感更冷：外層一定要防風，帽子也帶著。', '🏃 小孩會一直跑跳流汗：內層穿透氣的，並多帶一套備用衣服。', '👟 排隊與走路多，穿穩定好走的鞋。'],
+            3: ['🚶 吉卜力公園坡道多、步行量大：穿運動鞋或好走的鞋，大人也是。', '🥩 晚上吃燒肉會沾油煙味：外套選好清洗的，或帶一件乾淨的替換。', '🧦 有些店要脫鞋，襪子穿乾淨沒破洞的。'],
+            4: ['⛰️ 白川鄉、高山比名古屋冷很多：保暖層要加厚，帶手套、毛帽、暖暖包。', '👢 地面可能濕滑或結冰：穿防滑、防水的鞋。', '🚐 車上有暖氣：外套要方便穿脫，才不會一下熱一下冷。', '🦀 晚上回名古屋吃吃到飽，室內暖氣足，內層穿薄一點比較舒服。'],
+            5: ['🏯 犬山城天守進去通常要脫鞋：穿好穿脫的鞋，襪子乾淨。', '🪜 樓梯陡、推車上不去：小孩穿方便走動、不會絆腳的褲子。', '🛍️ 下午在長島室內外來回逛：衣服要好穿脫，也要能保暖。'],
+            6: ['✈️ 送機日：外套穿在身上，輕便好活動。', '🧳 保暖衣物放手提，上飛機冷氣冷時可以加穿。']
+        };
+
+        function renderOutfit(dayObj, list) {
+            const el = document.getElementById('outfit-card');
+            if (!el) return;
+
+            const forecasts = list.filter(w => w.isForecast);
+            const low = Math.min(...list.map(w => w.low));
+            const high = Math.max(...list.map(w => w.high));
+            const rainy = forecasts.some(w => (w.rainProb !== null && w.rainProb >= 50) || [51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(w.code));
+            const snowy = forecasts.some(w => [71,73,75,77,85,86].includes(w.code));
+
+            let feel, adult, kid, gear;
+            if (low <= 3 || high <= 9) {
+                feel = '🥶 非常冷';
+                adult = '發熱衣 + 毛衣 + 厚外套或羽絨外套，加圍巾、手套、毛帽';
+                kid = '發熱衣 + 刷毛或厚長袖 + 羽絨外套，帽子、手套、厚襪子，推車加蓋毯子';
+                gear = ['🔥 暖暖包（大人小孩都要）', '🧤 手套、毛帽、圍巾'];
+            } else if (high <= 14) {
+                feel = '🧥 偏冷';
+                adult = '發熱衣 + 毛衣 + 防風外套，用「洋蔥式」穿法，熱了可以脫';
+                kid = '發熱衣 + 長袖 + 厚外套，穿長褲和襪子，帶一件備用薄外套';
+                gear = ['🧣 薄圍巾或脖圍', '🔥 暖暖包備幾個'];
+            } else if (high <= 19) {
+                feel = '🍂 微涼';
+                adult = '長袖 + 針織衫或薄外套，傍晚再加一件';
+                kid = '長袖 + 長褲 + 針織外套，帶一件備用外套';
+                gear = ['🧥 一件輕薄可收納的外套'];
+            } else {
+                feel = '🌤️ 舒適';
+                adult = '長袖或短袖加薄外套，早晚備一件';
+                kid = '長袖 + 薄外套，流汗後要換乾衣服';
+                gear = ['🧢 帽子或薄外套'];
+            }
+            if (high - low >= 10) gear.push('🌡️ 早晚溫差 ' + (high - low) + '°C：內層薄、外層可脫，隨身帶袋子裝外套');
+            if (rainy) gear.push('☔ 折疊傘或雨衣、推車雨罩、防水鞋，另備小孩乾襪子與小毛巾');
+            if (snowy) gear.push('❄️ 防滑鞋、防水外層；若下雪，交通以安全為優先');
+
+            const tips = DAY_OUTFIT_TIPS[dayObj.day] || [];
+            const diff = daysBetween(todayJST(), dayObj.iso);
+            const when = diff === 0 ? '今天' : (diff > 0 ? `預覽（還有 ${diff} 天）` : '已過');
+            const wLines = list.map(w => {
+                const ic = weatherIcon(w);
+                return `<div class="flex items-center gap-2"><i class="fa-solid ${ic.icon} text-ghibli-blue w-5 text-center"></i><span class="font-bold">${escapeHtml(w.name)}</span><span>${w.low}° ~ ${w.high}°C</span><span class="text-xs text-gray-500">${w.isForecast ? ic.text + '・降雨 ' + (w.rainProb ?? '—') + '%' : '往年平均'}</span></div>`;
+            }).join('');
+            const src = forecasts.length
+                ? 'ℹ️ 預報來自 Open-Meteo，出發前一晚請再看一次氣象廳預報。'
+                : '⚠️ 目前顯示的是 11 月中旬往年平均，不是即時預報；穿搭按平均氣溫推估，請搭配下方氣象廳連結確認。';
+
+            const row = (icon, title, text) => `<div class="bg-white p-3 rounded-2xl drawn-border-sm"><div class="font-bold text-ghibli-brown">${icon} ${title}</div><div class="mt-1 leading-relaxed">${text}</div></div>`;
+
+            el.className = 'bg-ghibli-white drawn-border p-4 text-sm text-left';
+            el.innerHTML = `
+                <div class="flex items-center justify-between mb-2">
+                    <h2 class="font-ghibli text-lg font-bold text-ghibli-brown"><i class="fa-solid fa-shirt text-ghibli-green"></i> ${when} · ${escapeHtml(dayObj.label.split(' ')[0])} 天氣與穿搭</h2>
+                    <span class="text-xs bg-ghibli-accent text-white px-2 py-0.5 rounded-full whitespace-nowrap">${feel}</span>
+                </div>
+                <div class="text-xs text-gray-500 mb-2">${escapeHtml(dayObj.title)}</div>
+                <div class="space-y-1 bg-ghibli-lightblue/50 p-3 rounded-2xl mb-3">${wLines}</div>
+                <div class="space-y-2">
+                    ${row('🧑', '大人', adult)}
+                    ${row('🧒', '3 歲小孩（比大人多一層）', kid)}
+                    ${row('🎒', '要帶的東西', '<ul class="list-disc pl-5 space-y-0.5">' + gear.map(g => '<li>' + g + '</li>').join('') + '</ul>')}
+                    ${tips.length ? row('📍', '依今天行程', '<ul class="list-disc pl-5 space-y-0.5">' + tips.map(t => '<li>' + t + '</li>').join('') + '</ul>') : ''}
+                </div>
+                <div class="mt-3 text-xs text-gray-500 leading-relaxed">${src}</div>`;
+        }
+
+        // =====================================================
+        // 5. 待辦清單
+        // =====================================================
+
+        function renderChecklist() {
+            const container = document.getElementById('checklist-container');
+            const remaining = CHECKLIST_ITEMS.filter(i => i.critical && !state.checklist[i.id]).length;
+
+            container.innerHTML = `
+                ${remaining > 0 ? `
+                    <div class="bg-red-50 text-red-600 p-3 rounded-lg text-sm mb-4 border border-red-200 flex items-center gap-2">
+                        <i class="fa-solid fa-triangle-exclamation"></i> 還有 ${remaining} 項重要待辦未完成！
+                    </div>` : `
+                    <div class="bg-green-50 text-green-700 p-3 rounded-lg text-sm mb-4 border border-green-200 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-check"></i> 重要待辦都完成了！
+                    </div>`}
+                <div class="space-y-3">
+                    ${CHECKLIST_ITEMS.map(item => {
+                        const done = !!state.checklist[item.id];
+                        const cls = done ? 'text-gray-400 line-through' : (item.critical ? 'text-red-700 font-bold' : 'text-gray-700');
+                        return `
+                            <label class="flex items-start gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100 cursor-pointer hover:bg-gray-100 transition">
+                                <input type="checkbox" class="mt-1" onchange="toggleChecklist('${item.id}')" ${done ? 'checked' : ''}>
+                                <span class="text-sm ${cls} leading-tight">${escapeHtml(item.text)}</span>
+                            </label>`;
+                    }).join('')}
+                </div>`;
+        }
+
+        window.toggleChecklist = function (id) {
+            state.checklist[id] = !state.checklist[id];
+            try { localStorage.setItem('nagoya2026_checklist', JSON.stringify(state.checklist)); } catch (e) {}
+            renderChecklist();
+        };
+
+        // =====================================================
+        // 6. 日語會話（Gemini API + 內建備援）
+        // =====================================================
+
+        function speak(text) {
+            if (!window.speechSynthesis) { showToast("這個瀏覽器不支援語音功能"); return; }
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text.replace(/〇〇/g, ''));
+            u.lang = 'ja-JP';
+            u.rate = 0.85;
+            window.speechSynthesis.speak(u);
+        }
+
+        window.playAudio = function (btn) {
+            btn.classList.add('text-ghibli-green', 'scale-110');
+            setTimeout(() => btn.classList.remove('text-ghibli-green', 'scale-110'), 500);
+            speak(btn.getAttribute('data-jp'));
+        };
+
+        // 從內建句庫挑一句：一半機率挑「適合今天」的，且不和上一句重複
+        function pickFallbackPhrase() {
+            const day = state.currentDay;
+            const forToday = FALLBACK_PHRASES.map((p, i) => i).filter(i => FALLBACK_PHRASES[i].days.includes(day));
+            let pool = (forToday.length && Math.random() < 0.5) ? forToday : FALLBACK_PHRASES.map((p, i) => i);
+            pool = pool.filter(i => i !== state.lastPhraseIndex);
+            const idx = pool[Math.floor(Math.random() * pool.length)];
+            state.lastPhraseIndex = idx;
+            const p = FALLBACK_PHRASES[idx];
+            return { context: p.ctx, japanese: p.jp, kana: p.kana, romaji: p.romaji, chinese: p.zh };
+        }
+
+        async function askGemini(dayObj) {
+            // apiKey 留空：只有在 Gemini Canvas 裡執行時才會自動帶入金鑰；在其他地方打開會失敗並改用內建句庫
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+            const prompt = `你是日本旅遊日語助手。使用者是帶 3 歲小孩的台灣家庭，今天行程是「${dayObj.title}」（${dayObj.events.map(e => e.title).join('、')}）。
+請產生一句符合今天情境、實用且自然的日文短句，每次換不同情境。
+只輸出 JSON：{"context":"情境(繁中,4字內)","japanese":"日文","kana":"假名讀音","romaji":"羅馬拼音","chinese":"繁體中文翻譯"}`;
+
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 8000);
+            try {
+                const res = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig: { responseMimeType: "application/json" } }),
+                    signal: controller.signal
+                });
+                if (!res.ok) return null;
+                const data = await res.json();
+                const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!text) return null;
+                const obj = JSON.parse(text);
+                return obj.japanese ? obj : null;
+            } catch (e) {
+                return null;
+            } finally {
+                clearTimeout(timer);
+            }
+        }
+
+        async function generatePhrase() {
+            const btn = document.getElementById('btn-generate-phrase');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 思考中...';
+
+            const dayObj = ITINERARY[state.currentDay - 1];
+            let result = await askGemini(dayObj);
+            const fromAI = !!result;
+            if (!result) result = pickFallbackPhrase();
+
+            document.getElementById('ai-source-note').innerText = fromAI ? '這句由 Gemini 即時生成' : '目前使用內建句庫（36 句）';
+
+            const history = document.getElementById('ai-chat-history');
+            history.insertAdjacentHTML('beforeend', `
+                <div class="bg-white p-4 rounded-2xl rounded-tr-sm shadow-sm mb-4 ml-4 drawn-border-sm relative">
+                    <div class="text-[10px] bg-ghibli-accent text-white px-2 py-0.5 rounded-full absolute -top-2 -left-2 shadow-sm">${escapeHtml(result.context)}</div>
+                    <div class="flex justify-between items-start mb-2 mt-1">
+                        <div>
+                            <div class="text-sm text-gray-500">${escapeHtml(result.kana)}</div>
+                            <div class="text-lg font-bold text-gray-800">${escapeHtml(result.japanese)}</div>
+                            <div class="text-xs text-gray-400 mb-2">${escapeHtml(result.romaji)}</div>
+                        </div>
+                        <button onclick="playAudio(this)" data-jp="${escapeHtml(result.japanese)}" class="text-ghibli-blue text-2xl p-2 transition-transform" aria-label="播放發音">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </button>
+                    </div>
+                    <div class="text-sm text-ghibli-brown font-bold border-t border-gray-100 pt-2">${escapeHtml(result.chinese)}</div>
+                </div>`);
+            history.scrollTop = history.scrollHeight;
+
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> 再學一句';
+        }
+
+        // =====================================================
+        // 7. 定位與附近推薦
+        // =====================================================
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371e3;
+            const p1 = lat1 * Math.PI / 180, p2 = lat2 * Math.PI / 180;
+            const dp = (lat2 - lat1) * Math.PI / 180, dl = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dp / 2) ** 2 + Math.cos(p1) * Math.cos(p2) * Math.sin(dl / 2) ** 2;
+            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        }
+
+        // radius：GPS 用 500 公尺；手動選地點用 1500 公尺且不檢查是否通知過
+        function checkProximity(lat, lon, radius = 500, manual = false) {
+            const nearby = POI_DATA
+                .map(p => ({ ...p, dist: calculateDistance(lat, lon, p.lat, p.lon) }))
+                .filter(p => p.dist < radius)
+                .sort((a, b) => a.dist - b.dist);
+
+            nearby.forEach(poi => {
+                const key = `notified_${poi.name}`;
+                let seen = false;
+                try { seen = sessionStorage.getItem(key); } catch (e) {}
+                if (manual || !seen) {
+                    showToast(`📍 附近有 <b>${escapeHtml(poi.name)}</b>（${escapeHtml(poi.type)}・約 ${Math.round(poi.dist / 100) * 100} 公尺）<br><span class="text-xs">推薦：${escapeHtml(poi.buy)}</span>`, 'location');
+                    try { sessionStorage.setItem(key, '1'); } catch (e) {}
+                }
+            });
+            return nearby.length;
+        }
+
+        let watchId = null;
+        function startLocationTracking(showError = false) {
+            if (!("geolocation" in navigator)) {
+                if (showError) showToast('這個瀏覽器不支援定位，請用上方選單手動選地點。');
+                return;
+            }
+            if (watchId !== null) navigator.geolocation.clearWatch(watchId);
+            watchId = navigator.geolocation.watchPosition(
+                pos => checkProximity(pos.coords.latitude, pos.coords.longitude),
+                err => {
+                    console.log("定位失敗：", err);
+                    if (showError) showToast('無法取得定位（可能未授權），請用上方選單手動選地點。');
+                },
+                { enableHighAccuracy: false, maximumAge: 60000, timeout: 10000 }
+            );
+        }
+
+        // =====================================================
+        // 8. 通知
+        // =====================================================
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const isLoc = type === 'location';
+            toast.className = `${isLoc ? 'bg-ghibli-lightblue text-ghibli-brown' : 'bg-white text-gray-800'} p-4 rounded-2xl shadow-lg border-2 border-ghibli-lightgreen flex items-start gap-3 toast-enter pointer-events-auto`;
+            toast.innerHTML = `
+                <div class="text-xl mt-0.5">${isLoc ? '<i class="fa-solid fa-location-dot text-ghibli-blue"></i>' : '<i class="fa-solid fa-bell text-ghibli-accent"></i>'}</div>
+                <div class="flex-grow text-sm leading-relaxed">${message}</div>
+                <button onclick="this.parentElement.remove()" class="text-gray-400" aria-label="關閉"><i class="fa-solid fa-xmark"></i></button>`;
+            container.appendChild(toast);
+
+            // 同時最多顯示 3 則
+            while (container.children.length > 3) container.firstElementChild.remove();
+
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.transition = 'all 0.3s ease';
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(100%)';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 7000);
+        }
+
+        // 導遊小提示：每 3 分鐘有一半機率跳一則
+        setInterval(() => {
+            if (document.visibilityState === 'visible' && Math.random() < 0.5) {
+                showToast(GUIDE_TIPS[Math.floor(Math.random() * GUIDE_TIPS.length)]);
+            }
+        }, 3 * 60 * 1000);
+
+        // =====================================================
+        // 9. 初始化
+        // =====================================================
+
+        function initApp() {
+            updateCountdown();
+            setInterval(updateCountdown, 60 * 60 * 1000);
+
+            switchDay(getTodayIndex());
+
+            const aiModal = document.getElementById('ai-modal');
+            const chkModal = document.getElementById('checklist-modal');
+            const open = m => { m.classList.remove('hidden'); m.classList.add('flex'); };
+            const close = m => { m.classList.add('hidden'); m.classList.remove('flex'); };
+
+            document.getElementById('btn-ai-chat').addEventListener('click', () => open(aiModal));
+            document.getElementById('close-ai-modal').addEventListener('click', () => close(aiModal));
+            document.getElementById('btn-checklist').addEventListener('click', () => { renderChecklist(); open(chkModal); });
+            document.getElementById('close-checklist-modal').addEventListener('click', () => close(chkModal));
+            document.getElementById('btn-generate-phrase').addEventListener('click', generatePhrase);
+
+            document.getElementById('manual-location').addEventListener('change', e => {
+                const val = e.target.value;
+                if (val === 'auto') {
+                    startLocationTracking(true);
+                    showToast('已切換為自動定位', 'location');
+                } else if (LOCATIONS[val]) {
+                    if (watchId !== null) { navigator.geolocation.clearWatch(watchId); watchId = null; }
+                    showToast(`已切換位置：${LOCATIONS[val].name}`, 'location');
+                    const count = checkProximity(LOCATIONS[val].lat, LOCATIONS[val].lon, 1500, true);
+                    if (!count) showToast('這附近目前沒有收錄推薦地點。');
+                }
+            });
+
+            // 進站時第一次延遲 20 秒跳一則小提示，讓使用者知道有這個功能
+            setTimeout(() => showToast(GUIDE_TIPS[0]), 20000);
+
+            startLocationTracking(false);
+        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initApp); else initApp();
+    </script>
+
+</div>
+
+</body></html>
