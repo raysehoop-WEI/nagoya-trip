@@ -139,6 +139,13 @@
         </div>
     </header>
 
+    <!-- Whole-trip weather overview -->
+    <section id="overview-section" class="max-w-lg mx-auto px-4 pt-4">
+        <div id="trip-overview" class="bg-ghibli-white drawn-border p-4 text-sm text-gray-500 text-center">
+            <i class="fa-solid fa-spinner fa-spin text-ghibli-green"></i> 整趟天氣載入中…
+        </div>
+    </section>
+
     <!-- Weather + outfit card (follows the selected day) -->
     <section id="outfit-section" class="max-w-lg mx-auto px-4 pt-4">
         <div id="outfit-card" class="bg-ghibli-white drawn-border p-4 text-sm text-gray-500 text-center">
@@ -818,10 +825,10 @@
             el.className = 'bg-ghibli-white drawn-border p-4 text-sm text-left';
             el.innerHTML = `
                 <div class="flex items-center justify-between mb-2">
-                    <h2 class="font-ghibli text-lg font-bold text-ghibli-brown"><i class="fa-solid fa-shirt text-ghibli-green"></i> ${when} · ${escapeHtml(dayObj.label.split(' ')[0])} 天氣與穿搭</h2>
+                    <h2 class="font-ghibli text-lg font-bold text-ghibli-brown"><i class="fa-solid fa-shirt text-ghibli-green"></i> ${escapeHtml(dayObj.label.split(' ')[0])} 天氣與穿搭</h2>
                     <span class="text-xs bg-ghibli-accent text-white px-2 py-0.5 rounded-full whitespace-nowrap">${feel}</span>
                 </div>
-                <div class="text-xs text-gray-500 mb-2">${escapeHtml(dayObj.title)}</div>
+                <div class="text-xs text-gray-500 mb-2">${escapeHtml(dayObj.title)}・${when}</div>
                 <div class="space-y-1 bg-ghibli-lightblue/50 p-3 rounded-2xl mb-3">${wLines}</div>
                 <div class="space-y-2">
                     ${row('🧑', '大人', adult)}
@@ -830,6 +837,64 @@
                     ${tips.length ? row('📍', '依今天行程', '<ul class="list-disc pl-5 space-y-0.5">' + tips.map(t => '<li>' + t + '</li>').join('') + '</ul>') : ''}
                 </div>
                 <div class="mt-3 text-xs text-gray-500 leading-relaxed">${src}</div>`;
+        }
+
+
+        // =====================================================
+        // 4c. 整趟天氣總覽 + 出發前備衣建議
+        // =====================================================
+
+        async function renderTripOverview() {
+            const el = document.getElementById('trip-overview');
+            if (!el) return;
+            const RAIN_CODES = [51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99];
+            const SNOW_CODES = [71,73,75,77,85,86];
+
+            const all = await Promise.all(ITINERARY.map(async d => ({ day: d, ws: await Promise.all(d.weatherLocs.map(k => fetchWeather(k, d.iso))) })));
+            const rows = all.map(({ day, ws }) => {
+                const low = Math.min(...ws.map(w => w.low));
+                const high = Math.max(...ws.map(w => w.high));
+                const fc = ws.filter(w => w.isForecast);
+                const rain = fc.length ? Math.max(...fc.map(w => w.rainProb ?? 0)) : null;
+                const rainy = fc.some(w => (w.rainProb !== null && w.rainProb >= 50) || RAIN_CODES.includes(w.code));
+                const snowy = fc.some(w => SNOW_CODES.includes(w.code));
+                const coldName = (ws.find(w => w.low === low) || ws[0]).name;
+                let icon = weatherIcon(fc[0] || ws[0]).icon;
+                if (snowy) icon = 'fa-snowflake'; else if (rainy) icon = 'fa-cloud-rain';
+                return { day, low, high, rain, rainy, snowy, coldName, icon, isFc: fc.length > 0 };
+            });
+
+            const coldest = rows.reduce((a, b) => b.low < a.low ? b : a);
+            const tripLow = coldest.low;
+            const n = coldest.day.day;
+            const advice = [];
+            if (tripLow <= 3) advice.push(`🥶 最冷是 <b>Day ${n}（${escapeHtml(coldest.coldName)}）</b>，低到 ${tripLow}°C：備好發熱衣、毛帽手套、暖暖包、防風防水外套，小孩的也要。`);
+            else if (tripLow <= 8) advice.push(`🧥 最冷是 <b>Day ${n}（${escapeHtml(coldest.coldName)}）</b>，低到 ${tripLow}°C：要有毛衣和厚外套，小孩再加發熱衣。`);
+            else advice.push(`🍂 這幾天最低 ${tripLow}°C，長袖加外套就夠。`);
+            const rainyDays = rows.filter(r => r.rainy).map(r => 'Day ' + r.day.day);
+            if (rainyDays.length) advice.push(`☔ ${rainyDays.join('、')} 降雨機率高：折疊傘或雨衣、推車雨罩。`);
+            if (rows.some(r => r.snowy)) advice.push('❄️ 有預報下雪的日子：防滑鞋、防水外套，交通以安全為優先。');
+            if (tripLow <= 8) advice.push(`🛍️ 缺的衣物建議<b>出發前在台灣先買</b>。到了日本，最晚要在 Day ${Math.max(1, n - 1)} 買好，當天早上會很趕。`);
+            if (rows.some(r => !r.isFc)) advice.push('⚠️ 部分日期還是往年平均，不是即時預報，越接近出發越準。');
+
+            const tone = r => r.low <= 3 ? 'text-blue-700 font-bold' : (r.low <= 9 ? 'text-blue-500 font-bold' : 'text-gray-700');
+            const list = rows.map((r, i) => `
+                <button onclick="switchDay(${i}); document.getElementById('outfit-section').scrollIntoView({behavior:'smooth'})" class="w-full text-left flex items-center gap-2 bg-white p-2 rounded-xl drawn-border-sm ${r === coldest ? 'ring-2 ring-blue-300' : ''}">
+                    <div class="w-12 shrink-0 text-xs"><div class="font-bold text-ghibli-brown">Day ${r.day.day}</div><div class="text-gray-500">${escapeHtml(r.day.label.split(' ')[0])}</div></div>
+                    <i class="fa-solid ${r.icon} text-ghibli-blue w-6 text-center"></i>
+                    <div class="flex-grow min-w-0"><div class="truncate">${escapeHtml(r.day.title)}</div><div class="text-xs text-gray-500">${r.isFc ? '降雨 ' + (r.rain ?? '—') + '%' : '往年平均'}${r === coldest ? '・最冷' : ''}</div></div>
+                    <div class="shrink-0 ${tone(r)}">${r.low}° ~ ${r.high}°</div>
+                </button>`).join('');
+
+            el.className = 'bg-ghibli-white drawn-border p-4 text-sm text-left';
+            el.innerHTML = `
+                <h2 class="font-ghibli text-lg font-bold text-ghibli-brown mb-2"><i class="fa-solid fa-calendar-week text-ghibli-green"></i> 整趟天氣一覽</h2>
+                <div class="space-y-2">${list}</div>
+                <div class="mt-3 bg-yellow-50 p-3 rounded-2xl border-2 border-yellow-200">
+                    <div class="font-bold text-yellow-800 mb-1"><i class="fa-solid fa-suitcase-rolling"></i> 出發前要準備</div>
+                    <ul class="list-disc pl-5 space-y-1 text-gray-700">${advice.map(a => '<li>' + a + '</li>').join('')}</ul>
+                </div>
+                <div class="mt-2 text-xs text-gray-500">點任一天，下方會顯示那天的詳細穿搭。</div>`;
         }
 
         // =====================================================
@@ -1054,6 +1119,7 @@
             setInterval(updateCountdown, 60 * 60 * 1000);
 
             switchDay(getTodayIndex());
+            renderTripOverview();
 
             const aiModal = document.getElementById('ai-modal');
             const chkModal = document.getElementById('checklist-modal');
