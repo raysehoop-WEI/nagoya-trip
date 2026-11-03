@@ -589,7 +589,7 @@
             }
 
             const url = `https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}` +
-                `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max` +
+                `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,snowfall_sum` +
                 `&timezone=Asia%2FTokyo&start_date=${iso}&end_date=${iso}`;
 
             try {
@@ -609,6 +609,7 @@
                     low: Math.round(d.temperature_2m_min[0]),
                     rainProb: d.precipitation_probability_max ? d.precipitation_probability_max[0] : null,
                     code: d.weather_code ? d.weather_code[0] : null,
+                    snow: d.snowfall_sum ? d.snowfall_sum[0] : null,
                     isForecast: true
                 };
                 state.weatherCache[cacheKey] = result;
@@ -629,7 +630,7 @@
             const out = [];
             const forecasts = list.filter(w => w.isForecast);
             const rainy = forecasts.some(w => (w.rainProb !== null && w.rainProb >= 50) || [51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(w.code));
-            const snowy = forecasts.some(w => [71,73,75,77,85,86].includes(w.code));
+            const snowy = forecasts.some(w => [71,73,75,77,85,86].includes(w.code) || (w.snow || 0) > 0);
             const minLow = Math.min(...list.map(w => w.low));
             const maxHigh = Math.max(...list.map(w => w.high));
 
@@ -798,7 +799,7 @@
             const low = Math.min(...list.map(w => w.low));
             const high = Math.max(...list.map(w => w.high));
             const rainy = forecasts.some(w => (w.rainProb !== null && w.rainProb >= 50) || [51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(w.code));
-            const snowy = forecasts.some(w => [71,73,75,77,85,86].includes(w.code));
+            const snowy = forecasts.some(w => [71,73,75,77,85,86].includes(w.code) || (w.snow || 0) > 0);
 
             let feel, adult, kid, gear;
             if (low <= 3 || high <= 9) {
@@ -831,7 +832,7 @@
             const when = diff === 0 ? '今天' : (diff > 0 ? `預覽（還有 ${diff} 天）` : '已過');
             const wLines = list.map(w => {
                 const ic = weatherIcon(w);
-                return `<div class="flex items-center gap-2"><i class="fa-solid ${ic.icon} text-ghibli-blue w-5 text-center"></i><span class="font-bold">${escapeHtml(w.name)}</span><span>${w.low}° ~ ${w.high}°C</span><span class="text-xs text-gray-500">${w.isForecast ? ic.text + '・降雨 ' + (w.rainProb ?? '—') + '%' : '往年平均'}</span></div>`;
+                return `<div class="flex items-center gap-2"><i class="fa-solid ${ic.icon} text-ghibli-blue w-5 text-center"></i><span class="font-bold">${escapeHtml(w.name)}</span><span>${w.low}° ~ ${w.high}°C</span><span class="text-xs text-gray-500">${w.isForecast ? ic.text + '・降水 ' + (w.rainProb ?? '—') + '%' + ((w.snow || 0) > 0 ? '・❄️ 降雪 ' + w.snow.toFixed(1) + ' cm' : '') + (w.low <= 1 ? '・🧊 可能結冰' : '') : '往年平均'}</span></div>`;
             }).join('');
             const src = forecasts.length
                 ? 'ℹ️ 預報來自 Open-Meteo，出發前一晚請再看一次氣象廳預報。'
@@ -874,11 +875,12 @@
                 const fc = ws.filter(w => w.isForecast);
                 const rain = fc.length ? Math.max(...fc.map(w => w.rainProb ?? 0)) : null;
                 const rainy = fc.some(w => (w.rainProb !== null && w.rainProb >= 50) || RAIN_CODES.includes(w.code));
-                const snowy = fc.some(w => SNOW_CODES.includes(w.code));
+                const snowy = fc.some(w => SNOW_CODES.includes(w.code) || (w.snow || 0) > 0);
+                const snow = fc.length ? Math.max(...fc.map(w => w.snow || 0)) : 0;
                 const coldName = (ws.find(w => w.low === low) || ws[0]).name;
                 let icon = weatherIcon(fc[0] || ws[0]).icon;
                 if (snowy) icon = 'fa-snowflake'; else if (rainy) icon = 'fa-cloud-rain';
-                return { day, low, high, rain, rainy, snowy, coldName, icon, isFc: fc.length > 0 };
+                return { day, low, high, rain, rainy, snowy, snow, coldName, icon, isFc: fc.length > 0 };
             });
 
             const coldest = rows.reduce((a, b) => b.low < a.low ? b : a);
@@ -891,6 +893,8 @@
             const rainyDays = rows.filter(r => r.rainy).map(r => 'Day ' + r.day.day);
             if (rainyDays.length) advice.push(`☔ ${rainyDays.join('、')} 降雨機率高：折疊傘或雨衣、推車雨罩。`);
             if (rows.some(r => r.snowy)) advice.push('❄️ 有預報下雪的日子：防滑鞋、防水外套，交通以安全為優先。');
+            const iceDays = rows.filter(r => r.isFc && r.low <= 1);
+            if (iceDays.length) advice.push('🧊 ' + iceDays.map(r => 'Day ' + r.day.day + '（低到 ' + r.low + '°C）').join('、') + ' 早晚路面可能結冰：穿防滑鞋，推車和小孩走路要特別小心。');
             if (tripLow <= 8) advice.push(`🛍️ 缺的衣物建議<b>出發前在台灣先買</b>。到了日本，最晚要在 Day ${Math.max(1, n - 1)} 買好，當天早上會很趕。`);
             if (rows.some(r => !r.isFc)) advice.push('⚠️ 部分日期還是往年平均，不是即時預報，越接近出發越準。');
 
@@ -899,7 +903,7 @@
                 <button onclick="switchDay(${i}); document.getElementById('outfit-section').scrollIntoView({behavior:'smooth'})" class="w-full text-left flex items-center gap-2 bg-white p-2 rounded-xl drawn-border-sm ${r === coldest ? 'ring-2 ring-blue-300' : ''}">
                     <div class="w-12 shrink-0 text-xs"><div class="font-bold text-ghibli-brown">Day ${r.day.day}</div><div class="text-gray-500">${escapeHtml(r.day.label.split(' ')[0])}</div></div>
                     <i class="fa-solid ${r.icon} text-ghibli-blue w-6 text-center"></i>
-                    <div class="flex-grow min-w-0"><div class="truncate">${escapeHtml(r.day.title)}</div><div class="text-xs text-gray-500">${r.isFc ? '降雨 ' + (r.rain ?? '—') + '%' : '往年平均'}${r === coldest ? '・最冷' : ''}</div></div>
+                    <div class="flex-grow min-w-0"><div class="truncate">${escapeHtml(r.day.title)}</div><div class="text-xs text-gray-500">${r.isFc ? '降水 ' + (r.rain ?? '—') + '%' + (r.snow > 0 ? '・❄️ 降雪 ' + r.snow.toFixed(1) + ' cm' : '') + (r.low <= 1 ? '・🧊 可能結冰' : '') : '往年平均'}${r === coldest ? '・最冷' : ''}</div></div>
                     <div class="shrink-0 ${tone(r)}">${r.low}° ~ ${r.high}°</div>
                 </button>`).join('');
 
