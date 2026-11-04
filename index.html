@@ -49,7 +49,7 @@
         }
         .float-anim { animation: float 6s ease-in-out infinite; }
         @keyframes slideUp {
-            from { transform: translateY(100%); opacity: 0; }
+            from { transform: translateY(-100%); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
         .toast-enter { animation: slideUp 0.3s ease-out forwards; }
@@ -62,7 +62,8 @@
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     
         header.sticky { top: env(safe-area-inset-top, 0px) !important; }
-        nav.sticky { top: calc(90px + env(safe-area-inset-top, 0px)) !important; }
+        nav.sticky { top: env(safe-area-inset-top, 0px) !important; }
+        [data-panel] { padding-bottom: calc(8rem + env(safe-area-inset-bottom, 0px)); }
         .fab-stack { bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)) !important; }
         :root { color-scheme: light; }
         a:focus-visible, button:focus-visible, select:focus-visible { outline: 2px solid #8B5A2B; outline-offset: 2px; }
@@ -107,7 +108,7 @@
     </div>
 
     <!-- App Header -->
-    <header class="bg-ghibli-lightgreen/80 backdrop-blur-sm sticky top-0 z-40 px-4 py-3 shadow-sm rounded-b-2xl">
+    <header class="bg-ghibli-lightgreen/80 backdrop-blur-sm px-4 py-3 shadow-sm rounded-b-2xl">
         <div class="flex justify-between items-center mb-2">
             <h1 class="font-ghibli text-xl font-bold text-ghibli-brown flex items-center gap-2">
                 <i class="fa-solid fa-leaf text-ghibli-green"></i>
@@ -142,9 +143,9 @@
     <!-- Category tabs -->
     <nav id="category-bar" class="sticky top-[90px] z-30 bg-ghibli-white/90 backdrop-blur-sm py-2 px-4 shadow-sm">
         <div class="max-w-lg mx-auto grid grid-cols-3 gap-2">
-            <button data-cat="weather" onclick="showCategory('weather')" class="cat-btn tab-active drawn-border-sm border-2 border-transparent py-2 font-bold text-sm flex flex-col items-center leading-tight"><span class="text-xl">🌤️</span>天氣</button>
-            <button data-cat="tax" onclick="showCategory('tax')" class="cat-btn bg-white text-ghibli-brown drawn-border-sm border-2 border-transparent py-2 font-bold text-sm flex flex-col items-center leading-tight"><span class="text-xl">💴</span>新稅</button>
-            <button data-cat="itinerary" onclick="showCategory('itinerary')" class="cat-btn bg-white text-ghibli-brown drawn-border-sm border-2 border-transparent py-2 font-bold text-sm flex flex-col items-center leading-tight"><span class="text-xl">🗓️</span>行程</button>
+            <button data-cat="weather" onclick="showCategory('weather')" class="cat-btn tab-active drawn-border-sm border-2 border-transparent py-2 font-bold text-sm flex flex-row items-center justify-center gap-1.5"><span class="text-lg">🌤️</span>天氣</button>
+            <button data-cat="tax" onclick="showCategory('tax')" class="cat-btn bg-white text-ghibli-brown drawn-border-sm border-2 border-transparent py-2 font-bold text-sm flex flex-row items-center justify-center gap-1.5"><span class="text-lg">💴</span>新稅</button>
+            <button data-cat="itinerary" onclick="showCategory('itinerary')" class="cat-btn bg-white text-ghibli-brown drawn-border-sm border-2 border-transparent py-2 font-bold text-sm flex flex-row items-center justify-center gap-1.5"><span class="text-lg">🗓️</span>行程</button>
         </div>
     </nav>
 
@@ -227,14 +228,15 @@
     </div>
 
     <!-- Floating Buttons -->
-    <div class="fab-stack fixed bottom-6 right-4 flex flex-col gap-3 z-40">
-        <button id="btn-ai-chat" class="w-14 h-14 rounded-full bg-ghibli-blue text-white shadow-lg flex items-center justify-center text-2xl border-4 border-white transition transform hover:scale-110 active:scale-95" aria-label="日語小幫手">
+    <div class="fab-stack fixed bottom-6 right-4 flex flex-col gap-2 z-40">
+        <button id="btn-ai-chat" class="w-12 h-12 rounded-full bg-ghibli-blue text-white shadow-lg flex items-center justify-center text-xl border-2 border-white transition transform hover:scale-110 active:scale-95" aria-label="日語小幫手">
             <i class="fa-solid fa-language"></i>
         </button>
-        <button id="btn-checklist" class="w-14 h-14 rounded-full bg-ghibli-accent text-white shadow-lg flex items-center justify-center text-2xl border-4 border-white transition transform hover:scale-110 active:scale-95" aria-label="待辦清單">
+        <button id="btn-checklist" class="w-12 h-12 rounded-full bg-ghibli-accent text-white shadow-lg flex items-center justify-center text-xl border-2 border-white transition transform hover:scale-110 active:scale-95" aria-label="待辦清單">
             <i class="fa-solid fa-clipboard-list"></i>
         </button>
     </div>
+
 
     <!-- AI Japanese Modal -->
     <div id="ai-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex-col justify-end">
@@ -272,7 +274,7 @@
         </div>
     </div>
 
-    <div id="toast-container" class="fixed bottom-24 left-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
+    <div id="toast-container" class="fixed left-4 right-4 z-50 flex flex-col gap-2 pointer-events-none" style="top: calc(4rem + env(safe-area-inset-top, 0px));"></div>
 
     <script>
         // =====================================================
@@ -1104,7 +1106,7 @@
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             const isLoc = type === 'location';
-            toast.className = `${isLoc ? 'bg-ghibli-lightblue text-ghibli-brown' : 'bg-white text-gray-800'} p-4 rounded-2xl shadow-lg border-2 border-ghibli-lightgreen flex items-start gap-3 toast-enter pointer-events-auto`;
+            toast.className = `${isLoc ? 'bg-ghibli-lightblue text-ghibli-brown' : 'bg-white text-gray-800'} p-3 rounded-2xl shadow-lg border-2 border-ghibli-lightgreen flex items-start gap-3 toast-enter pointer-events-auto`;
             toast.innerHTML = `
                 <div class="text-xl mt-0.5">${isLoc ? '<i class="fa-solid fa-location-dot text-ghibli-blue"></i>' : '<i class="fa-solid fa-bell text-ghibli-accent"></i>'}</div>
                 <div class="flex-grow text-sm leading-relaxed">${message}</div>
@@ -1118,10 +1120,10 @@
                 if (toast.parentElement) {
                     toast.style.transition = 'all 0.3s ease';
                     toast.style.opacity = '0';
-                    toast.style.transform = 'translateY(100%)';
+                    toast.style.transform = 'translateY(-100%)';
                     setTimeout(() => toast.remove(), 300);
                 }
-            }, 7000);
+            }, 4500);
         }
 
         // 導遊小提示：每 3 分鐘有一半機率跳一則
