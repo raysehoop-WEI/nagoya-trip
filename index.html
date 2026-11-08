@@ -142,9 +142,10 @@
 
     <!-- Category tabs -->
     <nav id="category-bar" class="sticky top-[90px] z-30 bg-ghibli-white/90 backdrop-blur-sm py-2 px-4 shadow-sm">
-        <div class="max-w-lg mx-auto grid grid-cols-3 gap-2">
+        <div class="max-w-lg mx-auto grid grid-cols-4 gap-1.5">
             <button data-cat="weather" onclick="showCategory('weather')" class="cat-btn tab-active drawn-border-sm border-2 border-transparent py-2 font-bold text-sm flex flex-row items-center justify-center gap-1.5"><span class="text-lg">🌤️</span>天氣</button>
             <button data-cat="tax" onclick="showCategory('tax')" class="cat-btn bg-white text-ghibli-brown drawn-border-sm border-2 border-transparent py-2 font-bold text-sm flex flex-row items-center justify-center gap-1.5"><span class="text-lg">💴</span>新稅</button>
+            <button data-cat="shopping" onclick="showCategory('shopping')" class="cat-btn bg-white text-ghibli-brown drawn-border-sm border-2 border-transparent py-2 px-1 font-bold text-sm flex flex-row items-center justify-center gap-1"><span class="text-lg">🛍️</span>購物</button>
             <button data-cat="itinerary" onclick="showCategory('itinerary')" class="cat-btn bg-white text-ghibli-brown drawn-border-sm border-2 border-transparent py-2 font-bold text-sm flex flex-row items-center justify-center gap-1.5"><span class="text-lg">🗓️</span>行程</button>
         </div>
     </nav>
@@ -227,6 +228,73 @@
       </details>
     </section>
 
+    </div>
+
+    <div id="panel-shopping" data-panel class="hidden">
+    <section class="max-w-lg mx-auto px-4 pt-4">
+      <div class="bg-ghibli-white drawn-border p-4">
+        <h2 class="font-ghibli text-lg font-bold text-ghibli-brown flex items-center gap-2"><i class="fa-solid fa-bag-shopping text-ghibli-green"></i> 黑色星期五購物攻略</h2>
+        <div class="mt-3 bg-ghibli-lightblue p-3 rounded-2xl drawn-border-sm text-sm leading-relaxed">
+            🛍️ 真正的黑五在 11/27，你們 11/16 就回台灣了。但日本不少商場<b>提早從 11/13 開跑</b>，下面是我查到、跟你們行程有關的。資料查於 11/7，折扣以現場為準。
+        </div>
+        <div class="mt-3 space-y-3">
+        <div class="bg-white p-3 rounded-2xl drawn-border-sm">
+            <div class="font-bold text-ghibli-brown">🎮 電玩、卡牌店（Day 3・11/13）</div>
+            <div class="text-xs text-gray-500">行程只寫「市區逛街」，沒指定店名。以下是我查到、離飯店近的候選</div>
+            <div class="mt-2 space-y-2">
+            <div class="bg-ghibli-white/60 p-3 rounded-xl border border-gray-200">
+                <div class="font-bold">① ポケモンセンターナゴヤ</div>
+                <div class="text-xs text-gray-500">名古屋PARCO 東館2F・矢場町站直結・10:00～20:00</div>
+                <ul class="list-disc pl-5 mt-1 space-y-0.5 text-sm leading-relaxed"><li>寶可夢官方店，有卡牌區（カードステーション）。</li><li>新卡片多用抽選販售，人多的日子要拿整理券。</li><li>11/13 發售「スペシャルデッキセットMEGA」，販售方式我查到時還沒公布，剛好是 Day 3，當天到店看公告。</li></ul>
+                <a href="https://www.google.com/maps/search/?api=1&query=%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%8A%E3%82%B4%E3%83%A4" target="_blank" rel="noopener" class="inline-block mt-1 text-xs text-ghibli-blue underline">在地圖上看</a>
+            </div>
+            <div class="bg-ghibli-white/60 p-3 rounded-xl border border-gray-200">
+                <div class="font-bold">② 駿河屋 名古屋栄店</div>
+                <div class="text-xs text-gray-500">栄3丁目・6～7F・10:00～21:00</div>
+                <ul class="list-disc pl-5 mt-1 space-y-0.5 text-sm leading-relaxed"><li>公仔、動漫周邊、玩偶、卡牌、遊戲，二手與全新都有。</li></ul>
+                <a href="https://www.google.com/maps/search/?api=1&query=%E9%A7%BF%E6%B2%B3%E5%B1%8B%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E6%A0%84%E5%BA%97" target="_blank" rel="noopener" class="inline-block mt-1 text-xs text-ghibli-blue underline">在地圖上看</a>
+            </div>
+            <div class="bg-ghibli-white/60 p-3 rounded-xl border border-gray-200">
+                <div class="font-bold">③ ビックカメラ 名古屋駅西店</div>
+                <div class="text-xs text-gray-500">名古屋站西口・3F 有任天堂專區</div>
+                <ul class="list-disc pl-5 mt-1 space-y-0.5 text-sm leading-relaxed"><li>遊戲、玩具、模型都有。如果當天在名古屋站附近可以順路。</li><li>任天堂專區是 2025 年的開幕報導，現在還在不在要到店確認。</li></ul>
+                <a href="https://www.google.com/maps/search/?api=1&query=%E3%83%93%E3%83%83%E3%82%AF%E3%82%AB%E3%83%A1%E3%83%A9%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E8%A5%BF%E5%BA%97" target="_blank" rel="noopener" class="inline-block mt-1 text-xs text-ghibli-blue underline">在地圖上看</a>
+            </div>
+            <div class="bg-ghibli-white/60 p-3 rounded-xl border border-gray-200">
+                <div class="font-bold">④ 大須（備案）</div>
+                <div class="text-xs text-gray-500">駿河屋 名古屋大須本館・大須3-32-23 3～5F・10:00～21:00</div>
+                <ul class="list-disc pl-5 mt-1 space-y-0.5 text-sm leading-relaxed"><li>復古遊戲和卡牌店集中，但要逛好幾間，至少要半天。</li><li>從 PARCO 走到上前津站約 9 分鐘。</li><li>Day 3 吉卜力公園後時間不夠，除非其他天有空檔。</li></ul>
+                <a href="https://www.google.com/maps/search/?api=1&query=%E9%A7%BF%E6%B2%B3%E5%B1%8B%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%A4%A7%E9%A0%88%E6%9C%AC%E9%A4%A8" target="_blank" rel="noopener" class="inline-block mt-1 text-xs text-ghibli-blue underline">在地圖上看</a>
+            </div>
+            </div>
+            <ul class="list-disc pl-5 mt-2 space-y-1 text-sm leading-relaxed">
+                <li><b>時間提醒</b>：Day 3 白天在吉卜力公園，回到市區可能已經傍晚，建議挑 ①② 兩間就好。</li>
+                <li>買主機前請店員確認語言、保固和電源電壓，並用「新稅」分類的日語辦免稅。</li>
+            </ul>
+        </div>
+        <div class="bg-white p-3 rounded-2xl drawn-border-sm">
+            <div class="font-bold text-ghibli-brown">🏬 三井 Outlet Park 爵士夢長島（Day 5・11/15 週日）</div>
+            <div class="text-xs text-gray-500">已確認：官方新聞稿有明確日期</div>
+            <ul class="list-disc pl-5 mt-2 space-y-1 text-sm leading-relaxed"><li><b>BLACK FRIDAY SALE 11/13～11/29</b>：秋冬外套等人氣品牌最高 70% OFF，部分店家 2 件以上再 10% OFF。</li><li><b>樣品與 B 品特賣 11/13～11/15</b>：你們去的 11/15 是<b>最後一天</b>，想挖寶要早點到。</li><li>新開店：Acne Studios（11/6 開）、PYRENEX 法國羽絨（10/17 開）、LAVENHAM 英國絎縫外套（9/27 開）。</li><li>營業 10:00～20:00，美食街週末 10:30～21:00。</li><li>週日又碰上特賣，人會多：建議一開門就進場，小孩累了就先休息。</li></ul><a href="https://mitsui-shopping-park.com/mop/special/2611_blackfriday/" target="_blank" rel="noopener" class="block mt-2 text-xs text-ghibli-blue underline">官方特賣頁（三井）</a>
+        </div>
+        <div class="bg-white p-3 rounded-2xl drawn-border-sm">
+            <div class="font-bold text-ghibli-brown">🏙️ 名古屋市區（Day 3・11/13 榮、名古屋站）</div>
+            <div class="text-xs text-gray-500">還沒查到確定的黑五折扣</div>
+            <ul class="list-disc pl-5 mt-2 space-y-1 text-sm leading-relaxed"><li>松坂屋名古屋店 11/14～15 有全館感謝活動，但是 11/14 才開始，也沒寫是折扣。</li><li>榮的聖誕燈飾活動（松坂屋、PARCO、中日大樓等）11/14 起，你們 11/13 晚上還沒開始。</li><li><b>電器（ビックカメラ、ヨドバシ）</b>：今年日期官方還沒公布。去年 Bic 店面是第二個週五（11/14）開跑，如果今年一樣可能是 11/13，但這只是推測，請到店看海報。</li><li>PS5、電玩店的價格我沒查到，請現場比價。</li></ul>
+        </div>
+        <div class="bg-white p-3 rounded-2xl drawn-border-sm">
+            <div class="font-bold text-ghibli-brown">⏳ 這次碰不到的</div>
+            <div class="text-xs text-gray-500">你們 11/16 回台灣，這些都還沒開始</div>
+            <ul class="list-disc pl-5 mt-2 space-y-1 text-sm leading-relaxed"><li>真正的黑色星期五是 <b>11/27（五）</b>。</li><li>AEON 11/20 起、Gap 11/19 起。</li><li>長島「巨大扭蛋抽獎」11/21～23。</li><li>同系列的 Lalaport 名古屋港 Aqls 也是 11/13～29，但不在你們行程內。</li></ul>
+        </div>
+        <div class="bg-white p-3 rounded-2xl drawn-border-sm">
+            <div class="font-bold text-ghibli-brown">💡 購物小提醒</div>
+            <div class="text-xs text-gray-500"></div>
+            <ul class="list-disc pl-5 mt-2 space-y-1 text-sm leading-relaxed"><li>Day 4 山區最低到 -2°C，而長島特賣在<b>後一天</b>，防寒衣物<b>不要等到長島才買</b>。Day 3 在市區先買，或出發前在台灣備好。</li><li>折扣和庫存各店不同，現場看標示，尺寸不一定齊。</li><li>各店各自計算免稅，退稅步驟請看「新稅」分類。</li></ul>
+        </div>
+        </div>
+      </div>
+    </section>
     </div>
 
     <div id="panel-itinerary" data-panel class="hidden">
@@ -349,7 +417,7 @@
                 weatherLocs: ['ghibli', 'hotel'],
                 events: [
                     { time: '白天', title: '吉卜力公園', desc: '依購買的票券範圍參觀，園區大、坡道多。' },
-                    { time: '下午', title: '市區逛街', desc: '百貨、藥妝、PS5/電玩店採買。' },
+                    { time: '下午', title: '市區逛街', desc: '電玩店先挑 1～2 間：ポケモンセンターナゴヤ（名古屋PARCO 東館2F，矢場町站直結）、駿河屋 名古屋栄店（栄3丁目 6～7F）。大須是備案。更多資訊看「購物」分類。' },
                     { time: '晚上', title: '晚餐：高級燒肉', desc: '家族聚餐，享受和牛。' }
                 ],
                 restaurants: [
@@ -359,7 +427,8 @@
                 ],
                 smartReminders: [
                     '🚶 吉卜力公園步行量大、坡道多：帶水壺、穿好走的鞋。',
-                    '👶 部分室內設施推車需停在指定地點，建議備好背巾。'
+                    '👶 部分室內設施推車需停在指定地點，建議備好背巾。',
+                    '🎮 吉卜力公園結束後時間有限：名古屋PARCO 營業到 20:00，電玩店先挑 1～2 間就好。'
                 ]
             },
             {
