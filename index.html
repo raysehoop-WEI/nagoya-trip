@@ -151,6 +151,15 @@
     </nav>
 
     <div id="panel-weather" data-panel>
+    <!-- reminder entry -->
+        <section class="max-w-lg mx-auto px-4 pt-4">
+            <button id="remind-card" class="w-full text-left bg-yellow-50 border-2 border-yellow-300 rounded-2xl p-3 flex items-center gap-3">
+                <span class="text-2xl">🎒</span>
+                <span class="flex-grow"><span class="block font-bold text-yellow-900">出發前提醒：該帶的東西</span><span id="remind-progress" class="block text-xs text-yellow-800"></span></span>
+                <i class="fa-solid fa-chevron-right text-yellow-700"></i>
+            </button>
+        </section>
+
     <!-- Whole-trip weather overview -->
     <section id="overview-section" class="max-w-lg mx-auto px-4 pt-4">
         <div id="trip-overview" class="bg-ghibli-white drawn-border p-4 text-sm text-gray-500 text-center">
@@ -352,6 +361,72 @@
             <div class="flex-grow overflow-y-auto" id="checklist-container"></div>
         </div>
     </div>
+
+    <!-- Pre-trip reminder -->
+    <div id="remind-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex-col justify-end">
+        <div class="bg-ghibli-white rounded-t-3xl p-5 h-[85vh] flex flex-col drawn-border">
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="font-ghibli text-xl font-bold text-ghibli-brown">🎒 出發前提醒</h2>
+                <button id="remind-close" class="text-gray-500 text-2xl p-2" aria-label="關閉"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="text-xs text-gray-500 mb-3">勾選會存在這支手機。11/11 下午 2 點後，這個提醒就不會再出現。</div>
+            <div class="flex-grow overflow-y-auto pb-4">
+                <div class="bg-white p-3 rounded-2xl drawn-border-sm mb-2"><div class="font-bold text-ghibli-brown mb-1">📄 證件與手機</div><div class="space-y-1.5 text-sm leading-relaxed"><label class="flex items-start gap-2"><input type="checkbox" data-rk="g0i0" class="remind-cb mt-1 w-5 h-5 shrink-0"><span>每人護照（退稅也要用）、機票或電子登機證</span></label><label class="flex items-start gap-2"><input type="checkbox" data-rk="g0i1" class="remind-cb mt-1 w-5 h-5 shrink-0"><span>Visit Japan Web 的入境 QR code，截圖存起來</span></label><label class="flex items-start gap-2"><input type="checkbox" data-rk="g0i2" class="remind-cb mt-1 w-5 h-5 shrink-0"><span>包車、餐廳、門票的確認信，截圖存起來</span></label><label class="flex items-start gap-2"><input type="checkbox" data-rk="g0i3" class="remind-cb mt-1 w-5 h-5 shrink-0"><span>eSIM 或漫遊先開通，山區先存離線地圖</span></label></div></div>
+                <div class="bg-white p-3 rounded-2xl drawn-border-sm mb-2"><div class="font-bold text-ghibli-brown mb-1">🔋 搭機規定</div><div class="space-y-1.5 text-sm leading-relaxed"><label class="flex items-start gap-2"><input type="checkbox" data-rk="g1i0" class="remind-cb mt-1 w-5 h-5 shrink-0"><span>行動電源每人最多 2 顆：隨身帶、不能託運、機上不能充電</span></label></div></div>
+                <div class="bg-white p-3 rounded-2xl drawn-border-sm mb-2"><div class="font-bold text-ghibli-brown mb-1">🧥 衣物與雨具</div><div class="space-y-1.5 text-sm leading-relaxed"><label class="flex items-start gap-2"><input type="checkbox" data-rk="g2i0" class="remind-cb mt-1 w-5 h-5 shrink-0"><span>Day 4 山區最冷：發熱衣、毛帽、手套、暖暖包，小孩的也要</span></label><label class="flex items-start gap-2"><input type="checkbox" data-rk="g2i1" class="remind-cb mt-1 w-5 h-5 shrink-0"><span>折疊傘或雨衣、推車雨罩；缺的衣物出發前在台灣先買</span></label></div></div>
+                <div class="bg-white p-3 rounded-2xl drawn-border-sm mb-2"><div class="font-bold text-ghibli-brown mb-1">👶 小孩</div><div class="space-y-1.5 text-sm leading-relaxed"><label class="flex items-start gap-2"><input type="checkbox" data-rk="g3i0" class="remind-cb mt-1 w-5 h-5 shrink-0"><span>兒童座椅 x1（跟包車確認）</span></label><label class="flex items-start gap-2"><input type="checkbox" data-rk="g3i1" class="remind-cb mt-1 w-5 h-5 shrink-0"><span>推車或背巾、備用衣服襪子、常備藥（留原包裝）、零食小玩具</span></label></div></div>
+                <div class="bg-white p-3 rounded-2xl drawn-border-sm mb-2"><div class="font-bold text-ghibli-brown mb-1">💴 錢</div><div class="space-y-1.5 text-sm leading-relaxed"><label class="flex items-start gap-2"><input type="checkbox" data-rk="g4i0" class="remind-cb mt-1 w-5 h-5 shrink-0"><span>日幣現金；信用卡先確認海外手續費</span></label></div></div>
+                <div class="bg-white p-3 rounded-2xl drawn-border-sm mb-2"><div class="font-bold text-ghibli-brown mb-1">📞 人數有變，還要確認</div><div class="space-y-1.5 text-sm leading-relaxed"><label class="flex items-start gap-2"><input type="checkbox" data-rk="g5i0" class="remind-cb mt-1 w-5 h-5 shrink-0"><span>包車車型與報價、飯店房數、已買門票的人數</span></label></div></div>
+                <div class="bg-white p-3 rounded-2xl drawn-border-sm mb-2"><div class="font-bold text-ghibli-brown mb-1">🛍️ 購物與回程</div><div class="space-y-1.5 text-sm leading-relaxed"><label class="flex items-start gap-2"><input type="checkbox" data-rk="g6i0" class="remind-cb mt-1 w-5 h-5 shrink-0"><span>要退稅的人帶護照，免稅品先不要託運</span></label><label class="flex items-start gap-2"><input type="checkbox" data-rk="g6i1" class="remind-cb mt-1 w-5 h-5 shrink-0"><span>返台不能帶肉製品、生鮮水果、溏心蛋（最高罰 100 萬）</span></label></div></div>
+            </div>
+            <button id="remind-ok" class="mt-2 w-full bg-ghibli-green text-white font-bold py-3 rounded-2xl">知道了</button>
+        </div>
+    </div>
+
+    <script>
+    // 出發前提醒：開啟網頁時跳一次；11/11 14:00（台灣時間）之後不再顯示
+    (function () {
+        const CUT = Date.parse('2026-11-11T14:00:00+08:00');
+        const KEY = 'nagoya-remind-v1';
+        const modal = document.getElementById('remind-modal');
+        const card = document.getElementById('remind-card');
+        const prog = document.getElementById('remind-progress');
+        if (!modal) return;
+        const active = () => Date.now() < CUT;
+        const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+        const save = o => { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {} };
+        const cbs = [...modal.querySelectorAll('.remind-cb')];
+        const hide = () => { modal.classList.add('hidden'); modal.classList.remove('flex'); };
+        const refresh = () => {
+            if (card) card.classList.toggle('hidden', !active());
+            if (!active()) hide();
+            if (prog) prog.textContent = cbs.filter(c => c.checked).length + ' / ' + cbs.length + ' 已勾選';
+        };
+        const show = () => {
+            if (!active()) { refresh(); return; }
+            modal.classList.remove('hidden'); modal.classList.add('flex');
+        };
+        const saved = load();
+        cbs.forEach(c => {
+            c.checked = !!saved[c.dataset.rk];
+            c.addEventListener('change', () => { const o = load(); o[c.dataset.rk] = c.checked; save(o); refresh(); });
+        });
+        document.getElementById('remind-close').addEventListener('click', hide);
+        document.getElementById('remind-ok').addEventListener('click', hide);
+        modal.addEventListener('click', e => { if (e.target === modal) hide(); });
+        if (card) card.addEventListener('click', show);
+        document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
+        refresh();
+        if (active()) {
+            let seen = false;
+            try { seen = sessionStorage.getItem('nagoya-remind-seen') === '1'; } catch (e) {}
+            if (!seen) {
+                try { sessionStorage.setItem('nagoya-remind-seen', '1'); } catch (e) {}
+                setTimeout(show, 600);
+            }
+        }
+    })();
+    </script>
 
     <div id="toast-container" class="fixed left-4 right-4 z-50 flex flex-col gap-2 pointer-events-none" style="top: calc(4rem + env(safe-area-inset-top, 0px));"></div>
 
